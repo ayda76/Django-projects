@@ -21,7 +21,7 @@ form.addEventListener('submit', (e) => {
             if (data.access) {
                 localStorage.setItem('token', data.access)
                 window.location = 
-"C:\Users\Aida\Documents\MyDjango\Developers\Devs\frontend\projects-list.html"
+"file:///C:/Users/Aida/Documents/MyDjango/Developers/Devs/frontend/projects-list.html"
             } else {
                 alert('Username OR password did not work')
             }
