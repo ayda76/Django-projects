@@ -24,6 +24,18 @@ class Profile(models.Model):
 
     def __str__(self):
         return str(self.username)
+
+    class Meta:
+        ordering = ['created']
+
+    @property 
+    def imageURLs(self):
+        try:
+            img=self.profile_image.url
+
+        except:
+            img=''
+        return img
     
     
 class skills(models.Model):
