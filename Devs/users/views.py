@@ -7,13 +7,14 @@ from django.contrib import messages
 from .forms import CustomUserCreationForm, ProfileForm, SkillForm, MessageForm
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
-from .utils import searchProfiles
+from .utils import searchProfiles,paginateProfiles
 #from django.contrib.auth.forms import UserCreationForm
 # Create your views here.
 def profiles(request):
     profiles,search_query=searchProfiles(request)
+    custom_range,profiles=paginateProfiles(request,profiles,3)
     
-    context={'profiles':profiles,'search_query':search_query}
+    context={'profiles':profiles,'custom_range':custom_range,'search_query':search_query}
     return render(request,'users/profiles.html', context)
 
 def userProfiles(request,pk):
@@ -182,7 +183,7 @@ def viewMessage(request, pk):
 
 
 def createMessage(request,pk):
-    recipient=Profile.objects.get(id=pk)
+    reciepient=Profile.objects.get(id=pk)
     form=MessageForm()
 
     try:
@@ -196,7 +197,7 @@ def createMessage(request,pk):
         if form.is_valid():
             message=form.save(commit=False)
             message.sender=sender
-            message.recipient=recipient
+            message.reciepient=reciepient
 
             if sender:
                 message.name=sender.name
@@ -204,8 +205,8 @@ def createMessage(request,pk):
             message.save()
 
             messages.success(request,'your message was sent!')
-            return redirect('user-profile',pk=recipient.id)
+            return redirect('user-profile',pk=reciepient.id)
 
     
-    context={'recipient':recipient,'form':form}
+    context={'reciepient':reciepient,'form':form}
     return render(request,'users/message_form.html', context)

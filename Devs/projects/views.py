@@ -4,14 +4,18 @@ from .models import Project, Tag
 from .forms import ProjectForm, ReviewForm
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
-from .utils import searchProjects
+from .utils import searchProjects,paginateProjects
 from django.contrib import messages
+from django.core.paginator import Paginator , PageNotAnInteger, EmptyPage
+
 # Create your views here.
 
 def projects(request):
     projects,search_query=searchProjects(request)
+    custom_range,projects=paginateProjects(request,projects,3)
     
-    context={'projects':projects,'search_query':search_query}
+    
+    context={'projects':projects,'search_query':search_query,'custom_range':custom_range}
     return render(request,'projects/projects.html', context)
 
 def project(request, pk):
