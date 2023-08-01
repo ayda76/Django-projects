@@ -28,15 +28,6 @@ class UserSerializer(serializers.ModelSerializer):
         return name
 
     
-
-    
-
-    
-
-    
-    
-        
-
 class UserSerializerWithToken(UserSerializer):
     token=serializers.SerializerMethodField(read_only=True)
     class Meta:
@@ -74,7 +65,7 @@ class OrderSerializer(serializers.ModelSerializer):
 
   
 
-    def get_orderItems(self,obj):
+    def get_orders(self,obj):
         items=obj.orderitem_set.all()
         serializer=OrderItemSerializer(items,many=True)
         return serializer.data

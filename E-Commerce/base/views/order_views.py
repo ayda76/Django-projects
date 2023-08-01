@@ -2,14 +2,16 @@ from django.shortcuts import render, redirect
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
-from django.http import JsonResponse
-from base.models import Product , Order , OrderItem
+
+from base.models import Product , Order , OrderItem, ShippingAddress
 from django.contrib.auth.models import User
 from base.serializers import ProductSerializer, OrderSerializer
 
 
 from django.contrib.auth.hashers import make_password
 from rest_framework import status
+
+from datetime import datetime
 
 
 @api_view(['POST'])
@@ -58,6 +60,13 @@ def addOrderItems(request):
     return Response(serializer.data)
 
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def getAllOrders(request):
+    user=request.user
+    orders=user.order_set.all()
+    serializer=OrderSerializer(orders,many=True)
+    return Response(serializer.data)
 
 
 @api_view(['GET'])
@@ -79,6 +88,17 @@ def getOrderById(request,pk):
 
     except:
         return Response({'detail':'order does not exist'}, status=status.HTTP_400_BAD_REQUEST) 
+
+
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def updateOrderToPaid(request,pk):
+    order=Order.objects.get(_id=pk)
+    order.IsPaid=True
+    order.paidAt = datetime.now()
+    order.save()
+    return Response('order was paid')
+
         
 
 
