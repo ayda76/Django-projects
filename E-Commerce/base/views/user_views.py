@@ -78,6 +78,7 @@ def updateUserProfile(request):
     user.save()
 
     return Response(serializer.data)
+    
 @api_view(['GET'])
 @permission_classes([IsAdminUser])
 def getUsers(request):

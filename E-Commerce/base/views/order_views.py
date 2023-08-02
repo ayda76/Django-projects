@@ -59,7 +59,7 @@ def addOrderItems(request):
 
     return Response(serializer.data)
 
-
+#this view is for users to see their own orders
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def getAllOrders(request):
@@ -67,6 +67,17 @@ def getAllOrders(request):
     orders=user.order_set.all()
     serializer=OrderSerializer(orders,many=True)
     return Response(serializer.data)
+
+
+#this view is for admin to see all orders
+@api_view(['GET'])
+@permission_classes([IsAdminUser])
+def getOrders(request):
+    orders=Order.objects.all()
+    serializer=OrderSerializer(orders,many=True)
+    return Response(serializer.data)
+
+
 
 
 @api_view(['GET'])
@@ -100,6 +111,13 @@ def updateOrderToPaid(request,pk):
     return Response('order was paid')
 
         
-
+@api_view(['PUT'])
+@permission_classes([IsAdminUser])
+def updateOrderToDelivered(request,pk):
+    order=Order.objects.get(_id=pk)
+    order.isDelivered=True
+    order.deliveredAt = datetime.now()
+    order.save()
+    return Response('order was delivered')
 
     

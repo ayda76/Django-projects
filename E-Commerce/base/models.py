@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 class Product(models.Model):
     user= models.ForeignKey(User, on_delete=models.SET_NULL,null=True)
     name= models.CharField(max_length=200, blank=True, null=True)
-    image=models.ImageField(blank=True, null=True)
+    image=models.ImageField(blank=True, null=True,default='/placehorlder.png')
     
     brand=models.CharField(max_length=200, blank=True, null=True)
     category=models.CharField(max_length=200, blank=True, null=True)
@@ -29,6 +29,7 @@ class Review(models.Model):
     name=models.CharField(max_length=200, blank=True, null=True)
     rating=models.IntegerField(null=True,blank=True, default=0)
     comment=models.TextField(null=True,blank=True)
+    createdAt=models.DateTimeField(auto_now_add=True,null=True,blank=True)
     _id=models.AutoField(primary_key=True,editable=False)
 
     def __str__(self):
