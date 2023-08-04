@@ -4,10 +4,19 @@ import uuid
 
 # Create your models here.
 
+#tags model
+class Tag(models.Model):
+    name=models.CharField(max_length=300)  
+    created=models.DateTimeField(auto_now_add=True)
+    id=models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
+
+    def __str__(self):
+        return self.name
 
 #product model
 class Product(models.Model):
-    owner=models.ForeignKey(Profile,on_delete=models.CASCADE)
+    owner=models.ForeignKey(Profile,on_delete=models.CASCADE, null=True)
+    tags=models.ForeignKey(Tag,on_delete=models.CASCADE,null=True)
     name=models.CharField(max_length=300)
     description=models.TextField(null=True,blank=True)
     image=models.ImageField(null=True, blank=True,upload_to='profiles/')
@@ -56,7 +65,10 @@ class Category(models.Model):
     id=models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
 
     def __str__(self):
-        return self.name     
+        return self.name   
+
+
+
 
 
 #Reviews model
