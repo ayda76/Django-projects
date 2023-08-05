@@ -9,3 +9,8 @@ def getUsers(request):
     context={'profiles':profiles}
     return render(request,'users/users.html',context)
 
+def login(request):
+    
+    return render(request,'users/login.html')
+
+
