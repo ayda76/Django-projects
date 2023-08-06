@@ -50,51 +50,28 @@
                     <div class="filter-widget">
                         <h4 class="fw-title">Color</h4>
                         <div class="fw-color-choose">
+                            {% for color in colors %}
                             <div class="cs-item">
-                                <input type="radio" id="cs-black">
-                                <label class="cs-black" for="cs-black">Black</label>
+                                
+                                <a href="" style="background-color: {{color.color}};color: {{color.color}};  border-radius:20px; border-color:#504e4d; padding:10px; margin-up:10px">red</a>
+         
+                                <!--
+                                
+                                <label class="cs-black" for="cs-black">Black</label>-->
                             </div>
-                            <div class="cs-item">
-                                <input type="radio" id="cs-violet">
-                                <label class="cs-violet" for="cs-violet">Violet</label>
-                            </div>
-                            <div class="cs-item">
-                                <input type="radio" id="cs-blue">
-                                <label class="cs-blue" for="cs-blue">Blue</label>
-                            </div>
-                            <div class="cs-item">
-                                <input type="radio" id="cs-yellow">
-                                <label class="cs-yellow" for="cs-yellow">Yellow</label>
-                            </div>
-                            <div class="cs-item">
-                                <input type="radio" id="cs-red">
-                                <label class="cs-red" for="cs-red">Red</label>
-                            </div>
-                            <div class="cs-item">
-                                <input type="radio" id="cs-green">
-                                <label class="cs-green" for="cs-green">Green</label>
-                            </div>
+                            {% endfor %}
+                            
                         </div>
                     </div>
                     <div class="filter-widget">
                         <h4 class="fw-title">Size</h4>
                         <div class="fw-size-choose">
+                            {% for size in sizes %}
                             <div class="sc-item">
-                                <input type="radio" id="s-size">
-                                <label for="s-size">s</label>
+                                <input type="radio" id="{{size.name}}-size">
+                                <label for="{{size.name}}-size">{{size.name}}</label> 
                             </div>
-                            <div class="sc-item">
-                                <input type="radio" id="m-size">
-                                <label for="m-size">m</label>
-                            </div>
-                            <div class="sc-item">
-                                <input type="radio" id="l-size">
-                                <label for="l-size">l</label>
-                            </div>
-                            <div class="sc-item">
-                                <input type="radio" id="xs-size">
-                                <label for="xs-size">xs</label>
-                            </div>
+                            {% endfor %}
                         </div>
                     </div>
                     

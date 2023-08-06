@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Product, Category, Review, Tag
+from .models import Product, Category, Review, Tag, Size,Color
 # Create your views here.
 
 def getProducts(request):
@@ -17,8 +17,10 @@ def getProduct(request,pk):
     products=Product.objects.all()
     cats=Category.objects.all()
     tags=Tag.objects.all()
+    colors=Color.objects.all()
+    sizes=Size.objects.all()
     
-    context={'product':product,'cats':cats,'tags':tags,'products':products}
+    context={'product':product,'cats':cats,'tags':tags,'products':products, 'colors':colors, 'sizes':sizes}
     return render(request,'products/product.html',context)
 
 
