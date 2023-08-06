@@ -108,12 +108,14 @@ class Product(models.Model):
     @property 
     def getPriceWithDiscount(self):
         if self.discount != 0:
-            self.price=self.price - self.price * self.discount /100
-            self.save()
+            price=self.price - self.price * self.discount /100
+            print(price)
+            return price
+            
 
         
 
-        return self.price
+        
 
 
 
