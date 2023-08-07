@@ -1,25 +1,16 @@
-{% extends 'filter.html' %}
+{% extends 'main.html' %}
 {% block content %}
 
 <div class="col-lg-9 order-1 order-lg-2">
-    <!--<div class="product-show-option">
+    <div class="product-show-option">
         
         <div class="row">
-            <div class="col-lg-7 col-md-7">
-                <div class="select-option">
-                    <select class="sorting">
-                        <option value="">Default Sorting</option>
-                    </select>
-                    <select class="p-show">
-                        <option value="">Show:</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-lg-5 col-md-5 text-right">
-                <p>Show 01- 09 Of 36 Product</p>
+           
+            <div class="col-lg-12 col-md-12 text-center">
+                <h5> filtered: {{search_query}}</h5>
             </div>
         </div>
-    </div>-->
+    </div>
     <div class="product-list">
         <div class="row">
             {% for product in products %}
@@ -40,7 +31,7 @@
                     </div>
                     <div class="pi-text">
                         <div class="catagory-name">{{product.tag}}</div>
-                        <a href="#">
+                        <a href="{% url 'product' product.id %}">
                             <h5>{{product.name}}</h5>
                         </a>
                         <div class="product-price">

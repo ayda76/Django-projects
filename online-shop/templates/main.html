@@ -27,11 +27,24 @@
 
     <body>
         {% include 'navbar.html' %}
+        {% if page %}
+
+        {% include 'filter.html' %}
+
+        {% endif %}
 
         {% block content %}
         
         {% endblock content %}
-        
+
+         {% if page %}
+<!----------------------------->
+</div>
+</div>
+  </section>
+
+{% endif %}
+       
         {% include 'footer.html' %}
     </body>
 
