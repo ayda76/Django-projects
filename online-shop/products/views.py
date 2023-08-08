@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import Product, Category, Review, Tag, Size,Color
-from .utils import filterCat,filterColor,filterSize,filterTag, search,paginateProducts
+from .utils import filterCat,filterColor,filterSize,filterTag, search
 from django.core.paginator import Paginator , PageNotAnInteger, EmptyPage
 # Create your views here.
 
@@ -9,6 +9,7 @@ from django.core.paginator import Paginator , PageNotAnInteger, EmptyPage
 
 def getProducts(request):
     page=False
+    search_query=''
     products=Product.objects.all()
     slider_products=Product.objects.filter(vote_ratio__gte=4)
     cats=Category.objects.all()
@@ -38,6 +39,7 @@ def shop(request):
     
   
     page=True
+    search_query=''
     
     cats=Category.objects.all()
     tags=Tag.objects.all()
@@ -68,14 +70,20 @@ def shop(request):
         products=filterTag(pk=q[1])
         
     else:
+        if request.GET.get('search_query'):
+            products,search_query=search(request)
+        
+        else:
+            
+            products=Product.objects.all()
        
-        products,search_query=search(request)
+        
 
-    custom_range,products=paginateProjects(request,products,3)
+    #custom_range,products=paginateProjects(request,products,3)
 
 
     
-    context={'cats':cats,'tags':tags,'products':products, 'colors':colors, 'sizes':sizes, 'page':page, 'search_query':search_query,'custom_range':custom_range}
+    context={'cats':cats,'tags':tags,'products':products, 'colors':colors, 'sizes':sizes, 'page':page, 'search_query':search_query}
   
     return render(request,'products/shop.html',context)
 

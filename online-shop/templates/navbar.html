@@ -8,16 +8,19 @@
 <header class="header-section">
     <div class="header-top">
         <div class="container">
+            {% if request.user.is_authenticated %}
             <div class="ht-left">
                 <div class="mail-service">
-                    <i class=" fa fa-envelope"></i>
-                    hello.colorlib@gmail.com
+                    <!--<i class=" fa fa-envelope"></i>-->
+                    <p> Hello  Dear {{request.user.username}} !</p>
+                    
                 </div>
-                <div class="phone-service">
+                <!--<div class="phone-service">
                     <i class=" fa fa-phone"></i>
                     +65 11.188.888
-                </div>
+                </div>-->
             </div>
+            {% endif %}
             <div class="ht-right">
                 <a href="{% url 'login' %}" class="login-panel"><i class="fa fa-user"></i>Login</a>
                 
@@ -119,14 +122,14 @@
                     <i class="ti-menu"></i>
                     <span>All departments</span>
                     <ul class="depart-hover">
-                        <li class="active"><a href="#">Women’s Clothing</a></li>
-                        <li><a href="#">Men’s Clothing</a></li>
-                        <li><a href="#">Underwear</a></li>
-                        <li><a href="#">Kid's Clothing</a></li>
-                        <li><a href="#">Brand Fashion</a></li>
-                        <li><a href="#">Accessories/Shoes</a></li>
-                        <li><a href="#">Luxury Brands</a></li>
-                        <li><a href="#">Brand Outdoor Apparel</a></li>
+                        {% for cat in cats %}
+                        <li><a href="{% url 'shop'%}?q=cat,{{cat.id}}">{{cat.name}}’s </a></li>
+                        {% endfor %}
+                        {% for tag in tags%}
+                        <li><a href="{% url 'shop'%}?q=tag,{{tag.id}}">{{tag.name}}</a></li>
+                        {% endfor %}
+                        
+                        
                     </ul>
                 </div>
             </div>
