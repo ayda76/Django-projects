@@ -4,5 +4,5 @@ from . import views
 
 urlpatterns=[
     path('',views.getOrders, name='orders'),
-    path('make-order/<str:pk>',views.makeOrder, name='make-order')
+    
 ]

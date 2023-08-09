@@ -39,7 +39,7 @@ def shop(request):
     
   
     page=True
-    search_query=''
+    
     
     cats=Category.objects.all()
     tags=Tag.objects.all()
@@ -70,11 +70,13 @@ def shop(request):
         products=filterTag(pk=q[1])
         
     else:
+
         if request.GET.get('search_query'):
+            
             products,search_query=search(request)
         
         else:
-            
+            search_query=''
             products=Product.objects.all()
        
         

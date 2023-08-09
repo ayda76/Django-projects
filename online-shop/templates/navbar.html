@@ -47,26 +47,23 @@
                     <div class="advanced-search">
                         
                         <button type="button" class="category-btn">All Categories</button>
+                        <form action="{% url 'shop' %}" method="GET">
+                            {% csrf_token %}
                         <div class="input-group">
-                            <input type="text" value="{{search_query}}" placeholder="What do you need?">
-                            <a href=""></a><button type="button"><i class="ti-search"></i></button>
+                            <input type="text" value="{{search_query}}" name="search_query" placeholder="What do you need?">
+                            <button type="submit"><i class="ti-search"></i></button>
                         </div>
-                     
+                    </form>
                         
                     </div>
                 </div>
                 <div class="col-lg-3 text-right col-md-3">
                     <ul class="nav-right">
-                        <li class="heart-icon">
-                            <a href="#">
-                                <i class="icon_heart_alt"></i>
-                                <span>1</span>
-                            </a>
-                        </li>
+                       
                         <li class="cart-icon">
-                            <a href="#">
+                            <a href="{% url 'orders' %}">
                                 <i class="icon_bag_alt"></i>
-                                <span>3</span>
+                                <span>1</span>
                             </a>
                             <div class="cart-hover">
                                 <div class="select-items">
@@ -135,25 +132,26 @@
             </div>
             <nav class="nav-menu mobile-menu">
                 <ul>
-                    <li class="active"><a href="./index.html">Home</a></li>
-                    <li><a href="./shop.html">Shop</a></li>
-                    <li><a href="#">Collection</a>
+                    <li class="active"><a href="{% url 'products' %}">Home</a></li>
+                    <li><a href="{% url 'shop' %}">Shop</a></li>
+                    <li><a href="{% url 'shop' %}">Collection</a>
                         <ul class="dropdown">
-                            <li><a href="#">Men's</a></li>
-                            <li><a href="#">Women's</a></li>
-                            <li><a href="#">Kid's</a></li>
+                            {% for cat in cats %}
+                        <li><a href="{% url 'shop'%}?q=cat,{{cat.id}}">{{cat.name}}’s </a></li>
+                        {% endfor %}
+                          
                         </ul>
                     </li>
-                    <li><a href="./blog.html">Blog</a></li>
+                    
                     <li><a href="./contact.html">Contact</a></li>
                     <li><a href="#">Pages</a>
                         <ul class="dropdown">
-                            <li><a href="./blog-details.html">Blog Details</a></li>
-                            <li><a href="./shopping-cart.html">Shopping Cart</a></li>
+                            
+                            <li><a href="{% url 'orders' %}">Shopping Cart</a></li>
                             <li><a href="./check-out.html">Checkout</a></li>
-                            <li><a href="./faq.html">Faq</a></li>
-                            <li><a href="./register.html">Register</a></li>
-                            <li><a href="./login.html">Login</a></li>
+                            
+                            <li><a href="{% url 'register' %}">Register</a></li>
+                            <li><a href="{% url 'login' %}">Login</a></li>
                         </ul>
                     </li>
                 </ul>
