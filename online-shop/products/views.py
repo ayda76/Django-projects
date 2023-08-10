@@ -35,20 +35,14 @@ def shop(request):
     #get the filter and id of filter
     q= request.GET.get('q') if request.GET.get('q') !=None else ''
     q=q.split(",")
-    
-    
-  
+
     page=True
-    
     
     cats=Category.objects.all()
     tags=Tag.objects.all()
     colors=Color.objects.all()
     sizes=Size.objects.all()
   
-    
-   
-
     if q[0] == 'cat':
         cat=Category.objects.get(id=q[1])
         search_query=cat.name
@@ -83,8 +77,6 @@ def shop(request):
 
     #custom_range,products=paginateProjects(request,products,3)
 
-
-    
     context={'cats':cats,'tags':tags,'products':products, 'colors':colors, 'sizes':sizes, 'page':page, 'search_query':search_query}
   
     return render(request,'products/shop.html',context)

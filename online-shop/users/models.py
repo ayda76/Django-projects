@@ -12,7 +12,9 @@ class Profile(models.Model):
     tel=models.CharField(max_length=11)
     email=models.EmailField(max_length=400,null=True, blank=True)
     postalcode=models.CharField(max_length=15)
-    address=models.TextField()
+    country=models.TextField(null=True, blank=True)
+    city=models.TextField(null=True, blank=True)
+    address=models.TextField(null=True, blank=True)
     created=models.DateTimeField(auto_now_add=True)
     id= models.UUIDField(default=uuid.uuid4 , unique=True, primary_key=True, editable=False)
 
