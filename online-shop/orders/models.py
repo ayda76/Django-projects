@@ -10,7 +10,7 @@ class Order(models.Model):
     
     profile=models.ForeignKey(Profile,on_delete=models.SET_NULL,null=True)
     isPaid=models.BooleanField(default=False)
-    paymentMethod=models.CharField(max_length=200,null=True,blank=True)
+    paymentMethod=models.CharField(max_length=200,default='paypal')
     paidAt=models.DateTimeField(auto_now_add=False,null=True,blank=True)
     isDelivered=models.BooleanField(default=False)
     deliveredAt=models.DateTimeField(auto_now_add=False,null=True,blank=True)

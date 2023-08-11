@@ -19,59 +19,46 @@
 <!-- Shopping Cart Section Begin -->
 <section class="checkout-section spad">
     <div class="container">
-        <form action="#" class="checkout-form">
+        
             <div class="row">
                 <div class="col-lg-6">
                     <div class="checkout-content">
                         <a href="{% url 'login' %}" class="content-btn">Click Here To Login</a>
                     </div>
-                    <h4>Biiling Details</h4>
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <label for="fir">First Name<span>*</span></label>
-                            <input type="text" value="{{profile.first_name}}" id="fir">
-                        </div>
-                        <div class="col-lg-6">
-                            <label for="last">Last Name<span>*</span></label>
-                            <input type="text" value="{{profile.last_name}}" id="last">
-                        </div>
-                      
-                        <div class="col-lg-12">
-                            <label for="cun">Country<span>*</span></label>
-                            <input type="text" value="{{profile.country}}" id="cun">
-                        </div>
-                        <div class="col-lg-12">
-                            <label for="street">Street Address<span>*</span></label>
-                            <input type="text" value="{{profile.address}}" id="street" class="street-first">
-                          
-                        </div>
-                        <div class="col-lg-12">
-                            <label for="zip">Postcode / ZIP (optional)</label>
-                            <input type="text" value="{{profile.postalcode}}" id="zip">
-                        </div>
-                        <div class="col-lg-12">
-                            <label for="town">Town / City<span>*</span></label>
-                            <input type="text" value="{{profile.city}}"  id="town">
-                        </div>
-                        <div class="col-lg-6">
-                            <label for="email">Email Address<span>*</span></label>
-                            <input type="text" value="{{profile.email}}" id="email">
-                        </div>
-                        <div class="col-lg-6">
-                            <label for="phone">Phone<span>*</span></label>
-                            <input type="text" value="{{profile.tel}}" id="phone">
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="create-item">
-                                <label for="acc-create">
-                                    Create an account?
-                                    <a href="{% url 'register' %}"></a>
-                                </label>
-                            </div>
+                    
+                   
+                        
+            
+                            <form action="#" class="checkout-form">
+                            <div class="place-order">
+                                <h4>User Information</h4>
+                                <div class="order-total">
+                            <ul class="order-table">
+
+
+                            <li class="fw-normal" > first name <span>{{profile.first_name}}</span> </li>
+                            <li class="fw-normal"> last name <span>{{profile.last_name}}</span> </li>
+                            <li class="fw-normal"> username <span>{{profile.username}}</span> </li>
+                            <li class="fw-normal"> city <span>{{profile.city}}</span> </li>
+                            <li class="fw-normal"> country <span>{{profile.country}}</span> </li>
+                            <li class="fw-normal"> address <span>{{profile.address}}</span> </li>
+                            <li class="fw-normal"> postalcode <span>{{profile.postalcode}}</span> </li>
+                            <li class="fw-normal"> phone number <span>{{profile.tel}}</span> </li>
+                            <li class="fw-normal"> email <span>{{profile.email}}</span> </li>
+                        </ul>
+                        <div class="order-btn">
+                            <a href="{% url 'update-profile' %}" class="site-btn place-btn">Edit information</a>
                         </div>
                     </div>
+
+                  
+                    </div>
+                      
+                   
+                </form>
                 </div>
                 <div class="col-lg-6">
+                    <form action="#" class="checkout-form">
                     <div class="checkout-content">
                         <input type="text" placeholder="Enter Your Coupon Code">
                     </div>
@@ -88,25 +75,26 @@
                                 <li class="total-price">Total <span>${{total_price}}</span></li>
                             </ul>
                             <div class="payment-check">
-                                {% for pay in order.paymentMethod %}
+                                
                                 <div class="pc-item">
                                     <label for="pc-check">
-                                        {{pay}}
+                                        {{order.paymentMethod }}
                                         <input type="checkbox" id="pc-check">
                                         <span class="checkmark"></span>
                                     </label>
                                 </div>
-                                {% endfor %}
+                              
                                
                             </div>
                             <div class="order-btn">
-                                <button type="submit" class="site-btn place-btn">Place Order</button>
+                                <a href="{% url 'submit_order' order.id%}" class="site-btn place-btn">Place Order</a>
                             </div>
                         </div>
                     </div>
+                </form>
                 </div>
             </div>
-        </form>
+ 
     </div>
 </section>
 <!-- Shopping Cart Section End -->

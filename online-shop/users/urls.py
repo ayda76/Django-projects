@@ -2,8 +2,12 @@ from django.urls import path ,include
 from django.conf import settings
 from . import views
 urlpatterns = [
-    path('',views.getUsers, name='users'),
+    path('update-profile/',views.updateProfile, name='update-profile'),
     path('login/',views.loginUser, name='login'),
+    path('logout/',views.logoutUser, name='logout'),
     path('register/',views.registerUser, name='register'),
+    
+    path('',views.getUsers, name='users'),
+    
     
 ]

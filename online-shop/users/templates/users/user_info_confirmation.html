@@ -1,0 +1,63 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<div class="breacrumb-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb-text product-more">
+                    <a href="{% url 'products' %}"><i class="fa fa-home"></i> Home</a>
+                    <a href="{% url 'shop' %}">Shop</a>
+                    <span>User Info check</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb Section Begin -->
+
+<!-- Shopping Cart Section Begin -->
+<section class="checkout-section spad">
+    <div class="container">
+       
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="checkout-content">
+                        <a href="{% url 'login' %}" class="content-btn">Click Here To Login</a>
+                    </div>
+                    <h4  style="margin-left: 250px;">Biiling Details</h4>
+                    <div class="row">
+                        <form action="{% url 'update-profile' %}" class="checkout-form" method="POST">
+                            {% csrf_token %}
+
+                              {% for field in form %}
+
+                              <div class="col-lg-12" style="margin-left: 250px;margin-top: 10px;">
+                                <label style="font-size: 17px;">{{field.name}}<span>*</span></label>
+                                {{field}}
+
+                            </div>
+                               {% endfor %}
+                    
+                        <div class="col-lg-12" style="margin-left: 250px;">
+                           
+                            <button type="submit" class="site-btn place-btn">Confirm Your Information </button>
+                        </div>
+                    </form>
+                        <div class="col-lg-12">
+                            <div class="create-item" style="margin-left: 250px;">
+                                <label for="acc-create">
+                                    Create an account?
+                                    <a href="{% url 'register' %}"></a>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+      
+    </div>
+</section>
+                {% endblock content %}

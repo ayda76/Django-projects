@@ -14,3 +14,13 @@ class registerUserProfileForm(UserCreationForm):
         super(registerUserProfileForm, self).__init__(*args,**kwargs)
         for key, value in self.fields.items():
             value.widget.attrs.update({'class':'input input--text'})
+
+class updateProfileForm(ModelForm):
+    class Meta:
+        model=Profile
+        fields=['first_name','last_name' ,'email','username','city','country','address','tel','postalcode']
+
+    def  __init__(self,*args,**kwargs):
+        super(updateProfileForm, self).__init__(*args,**kwargs)
+        for key, value in self.fields.items():
+            value.widget.attrs.update({'class':'input input--text checkout-content'})

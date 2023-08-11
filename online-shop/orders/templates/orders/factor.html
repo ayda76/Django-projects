@@ -1,0 +1,52 @@
+
+{% extends 'main.html' %}
+{% block content%}
+<section class="checkout-section spad">
+    <div class="container">
+        
+            <div class="row">
+                <div class="col-lg-12">
+                    {% if order.isPaid%}
+                  
+                            <form action="#" class="checkout-form">
+                            <div class="place-order">
+                                <h4>User Information</h4>
+                                <div class="order-total">
+                            <ul class="order-table">
+
+
+                            <li class="fw-normal" > first name <span>{{profile.first_name}}</span> </li>
+                            <li class="fw-normal"> last name <span>{{profile.last_name}}</span> </li>
+                            <li class="fw-normal"> username <span>{{profile.username}}</span> </li>
+                            <li class="fw-normal"> city <span>{{profile.city}}</span> </li>
+                            <li class="fw-normal"> country <span>{{profile.country}}</span> </li>
+                            <li class="fw-normal"> address <span>{{profile.address}}</span> </li>
+                            {% for ord in orders %}
+                                
+                                <li class="fw-normal">{{ord.product.name}} x{{ord.qty}}<span>${{ord.getPrice}}</span></li>
+                                {% endfor %}
+                               
+                                <li class="total-price">Total <span>${{total_price}}</span></li>
+                            
+                        </ul>
+                        
+                        <div>
+                            <h4 style="margin-left: 350px;color: aquamarine;">successfully paid the order !</h4>
+                        </div>
+                    </div>
+
+                  
+                    </div>
+                      
+                   
+                </form>
+                {% else %}
+                <div>
+                    <h4 style="margin-left: 250px;color: rgb(223, 36, 36);">Could not pay the bill !</h4>
+                </div>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock content%}

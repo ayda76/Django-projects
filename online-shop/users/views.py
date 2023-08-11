@@ -3,7 +3,7 @@ from .models import Profile
 from django.contrib import messages
 from django.contrib.auth import login , authenticate ,logout
 from django.contrib.auth.models import User
-from .forms import registerUserProfileForm
+from .forms import registerUserProfileForm , updateProfileForm
 from django.contrib.auth.decorators import login_required
 
 
@@ -70,7 +70,41 @@ def registerUser(request):
     return render(request,'users/login_register.html',context)
 
 
+@login_required(login_url='login') 
+def logoutUser(request):
+    logout(request)
+    messages.error(request,'user loged out !!!')
     
+    return redirect('login')
+
+
+
+@login_required(login_url='login') 
+def updateProfile(request):
+    
+    user=request.user
+    profile=Profile.objects.get(user=user)
+    form=updateProfileForm(instance=profile)
+
+    if request.method =='POST':
+        form=updateProfileForm(request.POST,instance=profile)
+        if form.is_valid():
+            form.save()
+            print('saved the form')
+            return redirect('checkout')
+
+        else:
+            messages.error(request,'no user found! please login')
+        
+    
+    context={'form':form}
+    return  render(request,'users/user_info_confirmation.html',context)
+
+    
+
+    
+
+
 
 
 

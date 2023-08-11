@@ -22,37 +22,45 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
+                {% if orders %}
                 <div class="cart-table">
                     <table>
                         <thead>
                             <tr>
                                 <th>Image</th>
-                                <th class="p-name">Product Name</th>
+                                <th>Product Name</th>
                                 <th>Price</th>
-                                <th>Quantity</th>
                                 <th>Total</th>
-                                <th>{{q_product}}</th>
+                                <th>Quantity</th>
+                                <th>actions</th>
+                               
                             </tr>
                         </thead>
+                       
                         <tbody>
                             <!----->
                             {% for order in orders %}
                             <tr>
                                 <td class="cart-pic first-row"><img src="{{order.product.imageURL}}" alt=""></td>
-                                <td class="cart-title first-row">
+                                <td class=" first-row">
                                     <h5>{{order.product.name}}</h5>
                                 </td>
                                 <td class="p-price first-row">${{order.product.price}}</td>
+                                <td class="total-price first-row">{{order.getPrice}}</td>
                                 <td class="qua-col first-row">
                                     <div class="quantity">
-                                        
+                                       <form action="{% url 'update_orderItem' order.id %}" method="get">
+                                        {% csrf_token %}
                                         <div class="pro-qty">
                                             <input type="text"name="qty" value="{{order.qty}}">
                                         </div>
+
+                                        <button type="submit" style="border: none; margin-left: 10px; padding-top: 10px;padding-bottom: 10px;padding-left: 5px; padding-right: 5px;" >edit</button>
+                                    </form>
                                     </div>
                                 </td>
-                                <td class="total-price first-row">{{order.getPrice}}</td>
-                                <td class="close-td first-row"><i class="ti-close"></i></td>
+                                
+                                <td class="close-td first-row"><a href="{% url 'delete_order' order.id %}"><i class="ti-close"></i></a></td>
                             </tr>
                             {% endfor %}
 
@@ -64,8 +72,8 @@
                 <div class="row">
                     <div class="col-lg-4">
                         <div class="cart-buttons">
-                            <a href="{% url 'shop' %}" class="primary-btn continue-shop">Continue shopping</a>
-                            <a href="#" class="primary-btn up-cart">Update cart</a>
+                            <a href="{% url 'shop' %}" class="primary-btn up-cart">Continue shopping</a>
+                            
                         </div>
                         
                     </div>
@@ -75,10 +83,13 @@
                                 
                                 <li class="cart-total">Total <span>${{total_price}}</span></li>
                             </ul>
-                            <a href="{% url 'checkout' %}" class="proceed-btn">PROCEED TO CHECK OUT</a>
+                            <a href="{% url 'update-profile' %}" class="proceed-btn">PROCEED TO CHECK OUT</a>
                         </div>
                     </div>
                 </div>
+                {% else %}
+                <p>no items are added yet!</p>
+                {% endif %}
             </div>
         </div>
     </div>
