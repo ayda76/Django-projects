@@ -26,11 +26,11 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="product-details">
-                                <div class="pd-title">
-                                    <span>oranges</span>
+                               <!-- <div class="pd-title">
+                                    
                                     <h3>{{product.name}}</h3>
                                     <a href="#" class="heart-icon"><i class="icon_heart_alt"></i></a>
-                                </div>
+                                </div>-->
                                 <div class="pd-rating">
                                     <i class="fa fa-star"></i>
                                     <i class="fa fa-star"></i>
@@ -69,12 +69,15 @@
                                     <div class="pro-qty">
                                         <input type="text" value="1">
                                     </div>-->
+                                    {% if product.stock > 0 %}
                                     <a href="{% url 'orders' %}?q={{product.id}}" class="primary-btn pd-cart">Add To Cart</a>
+                                    {% endif %}
                                 </div>
                                 <ul class="pd-tags">
-                                    <li><span>CATEGORIES</span>{{product.cat}}</li>
-                                    <li><span>TAGS</span>{{product.tag}}</li>
+                                    <li><span>CATEGORIES</span> : {{product.cat}}</li>
+                                    <li><span>TAGS</span> :  {{product.tag}}</li>
                                 </ul>
+                                <!---
                                 <div class="pd-share">
                                     <div class="p-code">Sku : 00012</div>
                                     <div class="pd-social">
@@ -82,7 +85,7 @@
                                         <a href="#"><i class="ti-twitter-alt"></i></a>
                                         <a href="#"><i class="ti-linkedin"></i></a>
                                     </div>
-                                </div>
+                                </div>-->
                             </div>
                         </div>
                     </div>
@@ -96,7 +99,7 @@
                                     <a data-toggle="tab" href="#tab-2" role="tab">SPECIFICATIONS</a>
                                 </li>
                                 <li>
-                                    <a data-toggle="tab" href="#tab-3" role="tab">Customer Reviews (02)</a>
+                                    <a data-toggle="tab" href="#tab-3" role="tab">Customer Reviews ({{product.review_set.all.count }})</a>
                                 </li>
                             </ul>
                         </div>
@@ -138,12 +141,7 @@
                                                     <div class="p-price">${{product.price}}</div>
                                                 </td>
                                             </tr>
-                                            <tr>
-                                                <td class="p-catagory">Add To Cart</td>
-                                                <td>
-                                                    <div class="cart-add">+ add to cart</div>
-                                                </td>
-                                            </tr>
+                                            
                                             <tr>
                                                 <td class="p-catagory">Availability</td>
                                                 <td>
@@ -154,86 +152,71 @@
                                             <tr>
                                                 <td class="p-catagory">Size</td>
                                                 <td>
-                                                    <div class="p-size">Xxl</div>
+                                                    {% for size in product.size.all %}
+                                                    <div class="p-size">{{size}}</div>
+                                                    {% endfor  %}
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td class="p-catagory">Color</td>
-                                                <td><span class="cs-color"></span></td>
+                                                {% for color in product.color.all %}
+                                                <td> <div class="cc-item">
+                                                    <a href="" style="font-size: 5px;  background-color: {{color.color}};color: {{color.color}};  border-radius:20px; border-color:#504e4d; padding:10px; margin:20px">dd</a>
+                                                </div>
+                                                {% endfor  %}
+                                            </td>
                                             </tr>
-                                            <tr>
-                                                <td class="p-catagory">Sku</td>
-                                                <td>
-                                                    <div class="p-code">00012</div>
-                                                </td>
-                                            </tr>
+                                           
                                         </table>
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="tab-3" role="tabpanel">
                                     <div class="customer-review-option">
-                                        <h4>2 Comments</h4>
+                                        <h4>{{product.review_set.all.count }} Comments</h4>
                                         <div class="comment-option">
+                                             <!---->
+                                             {% for review in product.review_set.all %}
                                             <div class="co-item">
                                                 <div class="avatar-pic">
-                                                    <img src="img/product-single/avatar-1.png" alt="">
+                                                    <img src="{{review.owner.imageURL}}" alt="">
                                                 </div>
                                                 <div class="avatar-text">
                                                     <div class="at-rating">
+                                                        {% for i in  review.rating.range %}
                                                         <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star-o"></i>
+                                                        {% endfor %}
+                                                        
+                                                           <!-- <i class="fa fa-star-o"></i>-->
+                                                       
                                                     </div>
-                                                    <h5>Brandon Kelley <span>27 Aug 2019</span></h5>
-                                                    <div class="at-reply">Nice !</div>
+                                                    <h5>{{review.owner.username}}<span>{{review.created}}</span></h5>
+                                                    <div class="at-reply">{{review.comment}}</div>
                                                 </div>
                                             </div>
-                                            <div class="co-item">
-                                                <div class="avatar-pic">
-                                                    <img src="img/product-single/avatar-2.png" alt="">
-                                                </div>
-                                                <div class="avatar-text">
-                                                    <div class="at-rating">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star-o"></i>
-                                                    </div>
-                                                    <h5>Roy Banks <span>27 Aug 2019</span></h5>
-                                                    <div class="at-reply">Nice !</div>
-                                                </div>
-                                            </div>
+                                            <!---->
+                                            {% endfor %}
+                                         
                                         </div>
-                                        <div class="personal-rating">
-                                            <h6>Your Ratind</h6>
-                                            <div class="rating">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star-o"></i>
-                                            </div>
-                                        </div>
+                                      
+                                       <!---->
                                         <div class="leave-comment">
                                             <h4>Leave A Comment</h4>
-                                            <form action="#" class="comment-form">
+                                            <form action="{% url 'createReviews' product.id %}" method="POST" class="comment-form">
+                                                {% csrf_token %}
                                                 <div class="row">
                                                     <div class="col-lg-6">
-                                                        <input type="text" placeholder="Name">
+                                                        <label for="">rate from 1-5</label>
+                                                        <input  type="number" name="rating"  min="1" max="5" />
                                                     </div>
-                                                    <div class="col-lg-6">
-                                                        <input type="text" placeholder="Email">
-                                                    </div>
+                                                   
                                                     <div class="col-lg-12">
-                                                        <textarea placeholder="Messages"></textarea>
+                                                        <textarea name="comment" placeholder="Messages"></textarea>
                                                         <button type="submit" class="site-btn">Send message</button>
                                                     </div>
                                                 </div>
                                             </form>
                                         </div>
+                                        <!---->
                                     </div>
                                 </div>
                             </div>

@@ -25,13 +25,13 @@
 
                
                 <a href="{% url 'logout' %}" class="login-panel"><i class="fa fa-user"></i>LogOut</a>
-                
+                <!--
                 <div class="top-social">
                     <a href="#"><i class="ti-facebook"></i></a>
                     <a href="#"><i class="ti-twitter-alt"></i></a>
                     <a href="#"><i class="ti-linkedin"></i></a>
                     <a href="#"><i class="ti-pinterest"></i></a>
-                </div>
+                </div>-->
             </div>
             {% else %}
             <div class="ht-left">
@@ -50,13 +50,13 @@
 
                
                 <a href="{% url 'login' %}" class="login-panel"><i class="fa fa-user"></i>Login</a>
-                
+                <!--
                 <div class="top-social">
                     <a href="#"><i class="ti-facebook"></i></a>
                     <a href="#"><i class="ti-twitter-alt"></i></a>
                     <a href="#"><i class="ti-linkedin"></i></a>
                     <a href="#"><i class="ti-pinterest"></i></a>
-                </div>
+                </div>-->
             </div>
 
 
@@ -76,7 +76,7 @@
                 <div class="col-lg-2 col-md-2">
                     <div class="logo">
                         <a href="{% url 'products' %}">
-                            <img src="img/logo.png" alt="">
+                           
                         </a>
                     </div>
                 </div>
@@ -100,12 +100,14 @@
                         <li class="cart-icon">
                             <a href="{% url 'orders' %}">
                                 <i class="icon_bag_alt"></i>
-                                <span>1</span>
+                            
                             </a>
+                            <!---
                             <div class="cart-hover">
                                 <div class="select-items">
                                     <table>
                                         <tbody>
+                                        
                                             <tr>
                                                 <td class="si-pic"><img src="img/select-product-1.jpg" alt=""></td>
                                                 <td class="si-text">
@@ -137,13 +139,14 @@
                                     <span>total:</span>
                                     <h5>$120.00</h5>
                                 </div>
+                               
                                 <div class="select-button">
-                                    <a href="#" class="primary-btn view-card">VIEW CARD</a>
+                                    <a href="{% url 'orders'%}" class="primary-btn view-card">VIEW CART</a>
                                     <a href="#" class="primary-btn checkout-btn">CHECK OUT</a>
                                 </div>
-                            </div>
+                            </div>  
                         </li>
-                        <li class="cart-price">$150.00</li>
+                        <li class="cart-price">$150.00</li>-->
                     </ul>
                 </div>
             </div>

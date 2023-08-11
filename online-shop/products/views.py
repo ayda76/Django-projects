@@ -1,7 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from .models import Product, Category, Review, Tag, Size,Color
 from .utils import filterCat,filterColor,filterSize,filterTag, search
 from django.core.paginator import Paginator , PageNotAnInteger, EmptyPage
+from users.models import Profile
+from django.contrib import messages
 # Create your views here.
 
 
@@ -14,7 +16,7 @@ def getProducts(request):
     slider_products=Product.objects.filter(vote_ratio__gte=4)
     cats=Category.objects.all()
     tags=Tag.objects.all()
-
+    
     context={'products':products,'slider_products':slider_products,'cats':cats, 'tags':tags, 'page':page,'search_query':search_query }
     return render(request, 'products/products.html',context)
 
@@ -27,6 +29,7 @@ def getProduct(request,pk):
     tags=Tag.objects.all()
     colors=Color.objects.all()
     sizes=Size.objects.all()
+    
     
     context={'product':product,'cats':cats,'tags':tags,'products':products, 'colors':colors, 'sizes':sizes, 'page':page}
     return render(request,'products/product.html',context)
@@ -84,4 +87,44 @@ def shop(request):
 
 
 
+def createReviews(request,pk):
+    product=Product.objects.get(id=pk)
+    user=request.user
+    profile=Profile.objects.get(user=user)
 
+    if profile.review_set.filter(product=product):
+        messages.error(request,'you have already commented on this product!')
+        return redirect('product',pk=product.id)
+       
+
+    else:
+        if request.method == 'POST':
+            rating=request.POST['rating']
+            comment=request.POST['comment']
+        
+         
+            new_review=Review.objects.create(
+                owner=profile,
+                product=product,
+                rating=rating,
+                comment=comment)
+            
+
+            reviews=product.review_set.all()
+            total=0
+            for i in reviews:
+                total += i.rating
+            
+
+            product.rating=total / len(reviews)   
+            product.save()
+
+            return redirect('product',pk=product.id)
+
+        
+
+        
+
+    
+
+    

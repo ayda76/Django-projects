@@ -113,29 +113,15 @@ class Product(models.Model):
             return price
             
 
-        
-
-        
-
-
-
-
-
-
-
 #Reviews model
 class Review(models.Model):
     owner=models.ForeignKey(Profile,on_delete=models.CASCADE)
     product=models.ForeignKey(Product, on_delete=models.CASCADE)
-    VOTE_TYPE=(
-        ('up','up_vote'),
-        ('down','down_vote')
-    )
-    value=models.CharField(max_length = 200, choices=VOTE_TYPE)
+    rating=models.IntegerField(null=True,blank=True, default=0)
     comment=models.TextField(null=True, blank=True) 
     created=models.DateTimeField(auto_now_add=True)
     id=models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
 
     def __str__(self):
-        return self.value
+        return str(self.rating)
     

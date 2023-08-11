@@ -8,6 +8,7 @@ urlpatterns = [
     path('',views.getProducts,name='products'),
     
     path('shop/',views.shop,name='shop'),
+    path('createReviews/<str:pk>/',views.createReviews,name='createReviews'),
     path('<str:pk>/',views.getProduct,name='product'),
     
     
