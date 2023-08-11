@@ -8,11 +8,15 @@ from django.contrib import messages
 
 # Create your views here.
 
+
+
+####### DO NOT DARE TOUCH THIS FUNCTION########
 @login_required(login_url='login')
 def getOrders(request):
     user=request.user
     profile=Profile.objects.get(user=user)
-    order=profile.order_set.get(isPaid=False)
+    order=Order.objects.get(isPaid=False)
+
     #get the added product's id
     q= request.GET.get('q') if request.GET.get('q') !=None else ''
 
@@ -21,26 +25,42 @@ def getOrders(request):
         #check if product is added as an order item
         if q !='':
             added_product=Product.objects.get(id=q)
-            OrderItem.objects.create(order=order,product=added_product)
-            
+            order_item=OrderItem.objects.create(order=order,product=added_product)
+        
+        orders=order.orderitem_set.all()
 
+    
     else:
         #create an order and then create the order item
         order=Order.objects.create(profile=profile)
         if q !='':
             added_product=Product.objects.get(id=q)
-            OrderItem.objects.create(order=order,product=added_product)
+            order_item=OrderItem.objects.create(order=order,product=added_product)
+        orders=order.orderitem_set.all()
+        
+        
            
     #get all order items     
-    orders=order.orderitem_set.all() 
+    
+    
+    #print(f"orderssssssssss:{orders}")
+    
+    
+    if orders is not None:
+        total_price=0
+        q_product=0
+        for o in orders:
+            total_price +=o.getPrice
+            q_product +=1
+        context={'orders':orders,'total_price':total_price,'q_product':q_product}
+    else:
+        total_price=0
+        q_product=0
+        context={'orders':orders,'total_price':total_price,'q_product':q_product}
+    
+        
 
-    total_price=0
-    q_product=0
-    for o in orders:
-        total_price +=o.getPrice
-        q_product +=1
-
-    context={'orders':orders,'total_price':total_price,'q_product':q_product}
+    #context={'orders':orders,'total_price':total_price,'q_product':q_product}
     return render(request,'orders/cart.html',context)
 
 
