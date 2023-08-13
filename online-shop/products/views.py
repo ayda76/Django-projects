@@ -4,6 +4,8 @@ from .utils import filterCat,filterColor,filterSize,filterTag, search
 from django.core.paginator import Paginator , PageNotAnInteger, EmptyPage
 from users.models import Profile
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from .forms import createProductForm,createColorForm,createCategoryForm,createReviewForm,createSizeForm,createTagForm
 # Create your views here.
 
 
@@ -86,7 +88,7 @@ def shop(request):
 
 
 
-
+@login_required(login_url='login')
 def createReviews(request,pk):
     product=Product.objects.get(id=pk)
     user=request.user
@@ -124,6 +126,120 @@ def createReviews(request,pk):
         
 
         
+#### admin functions
+@login_required(login_url='login')
+def createProduct(request):
+    user=request.user
+    profile=Profile.objects.get(user=user)
+    product=Product.objects.create(
+            owner=profile   
+        )
+    form=createProductForm(instance=product)
+    form_name='product'
+    if user.is_staff == True:
+        
+        if request.method == "POST":
+            form=createProductForm(request.POST,instance=product)
+            if form.is_valid():
+                form.save()
+                return redirect('admin-page')
+
+    context={'form':form,'form_name':form_name}
+    return render(request,'products/form.html',context)
+
+
+@login_required(login_url='login')
+def createTag(request):
+    user=request.user
+    profile=Profile.objects.get(user=user)
+    tag=Tag.objects.create()
+    form=createTagForm(instance=tag)
+    form_name='tag'
+    if user.is_staff == True:
+        
+        if request.method == "POST":
+            form=createTagForm(request.POST,instance=tag)
+            if form.is_valid():
+                form.save()
+                return redirect('admin-page')
+
+    context={'form':form,'form_name':form_name}
+    return render(request,'products/form.html',context)
+
+@login_required(login_url='login')
+def createSize(request):
+    user=request.user
+    profile=Profile.objects.get(user=user)
+    size=Size.objects.create()
+    form=createSizeForm(instance=size)
+    form_name='size'
+    if user.is_staff == True:
+        
+        if request.method == "POST":
+            form=createSizeForm(request.POST,instance=size)
+            if form.is_valid():
+                form.save()
+                return redirect('admin-page')
+
+    context={'form':form,'form_name':form_name}
+    return render(request,'products/form.html',context)
+
+@login_required(login_url='login')
+def createColor(request):
+    user=request.user
+    profile=Profile.objects.get(user=user)
+    color=Color.objects.create()
+    form=createColorForm(instance=color)
+    form_name='color'
+    if user.is_staff == True:
+        
+        if request.method == "POST":
+            form=createColorForm(request.POST,instance=color)
+            if form.is_valid():
+                form.save()
+                return redirect('admin-page')
+
+    context={'form':form,'form_name':form_name}
+    return render(request,'products/form.html',context)
+
+@login_required(login_url='login')
+def createReview(request):
+    user=request.user
+    profile=Profile.objects.get(user=user)
+    review=Review.objects.create(
+            owner=profile   
+        )
+    form=createReviewForm(instance=review)
+    form_name='review'
+    if user.is_staff == True:
+        
+        if request.method == "POST":
+            form=createProduct(request.POST,instance=review)
+            if form.is_valid():
+                form.save()
+                return redirect('admin-page')
+
+    context={'form':form,'form_name':form_name}
+    return render(request,'products/form.html',context)
+
+@login_required(login_url='login')
+def createCat(request):
+    user=request.user
+    
+    cat=Category.objects.create()
+    form=createCategoryForm(instance=cat)
+    form_name='cat'
+    if user.is_staff == True:
+        
+        if request.method == "POST":
+            form=createCategoryForm(request.POST,instance=cat)
+            if form.is_valid():
+                form.save()
+                return redirect('admin-page')
+
+    context={'form':form,'form_name':form_name}
+    return render(request,'products/form.html',context)
+
 
     
 

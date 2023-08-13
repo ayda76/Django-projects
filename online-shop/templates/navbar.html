@@ -186,11 +186,21 @@
                     <li><a href="./contact.html">Contact</a></li>
                     <li><a href="#">Pages</a>
                         <ul class="dropdown">
-                            {% if request.user.is_authenticated %}
+                            {% if request.user.is_staff == True %}
+                            <li><a href="{% url 'orders' %}">Shopping Cart</a></li>
+                            <li><a href="{%url 'checkout' %}">Checkout</a></li>
+                            <li><a href="{% url 'admin-page' %}">Admin Panel</a>
+                            <li><a href="{% url 'update-profile' %}">Profile info</a>
+
+                            {% elif request.user.is_authenticated %}
                             <li><a href="{% url 'orders' %}">Shopping Cart</a></li>
                             <li><a href="{%url 'checkout' %}">Checkout</a></li>
                             
-                            <li><a href="{% url 'update-profile' %}">Profile info</a></li>{% else %}
+                            <li><a href="{% url 'update-profile' %}">Profile info</a></li>
+                            
+                                {% else %}
+
+
                             <li><a href="{% url 'orders' %}">Shopping Cart</a></li>
                             <li><a href="{%url 'checkout' %}">Checkout</a></li>
                             <li><a href="{% url 'register' %}">Register</a></li>

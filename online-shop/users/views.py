@@ -58,6 +58,13 @@ def registerUser(request):
             user.username= user.username.lower()
             user.save()
             user=form.save()
+            profile=Profile.objects.create(
+                user=user,
+                username=user.username,
+                first_name=user.first_name,
+                last_name=user.last_name,
+                email=user.email)
+            profile.save()
             messages.success(request, 'User account was created')
             
             login(request, user)
@@ -156,6 +163,40 @@ def getAdminPages(request):
         return render(request,'users/adminpanel.html',context)
 
         
+#admin functions
+
+@login_required(login_url='login') 
+def updateUserProfile(request,pk):
+    user=request.user
+    profile=Profile.objects.get(id=pk)
+    
+    if user.is_staff == True:
+        form=updateProfileForm(instance=profile)
+
+        if request.method == 'POST':
+            form=updateProfileForm(request.POST,instance=profile)
+            if form.is_valid():
+                form.save()
+                return redirect('admin-page')
+            else:
+                messages.error(request,'no user found! please login')
+
+        else:
+            messages.error(request,'You need to login as an admin first :)')
+        
+        context={'form':form,'profile':profile}
+        return render(request,'users/user_info_confirmation.html',context)
+
+@login_required(login_url='login') 
+def deleteUserProfile(request,pk):
+    user=request.user
+    if user.is_staff == True:
+        profile=Profile.objects.get(id=pk)
+        profile.user.delete()
+        profile.delete()
+        return redirect('admin-page')
+    
+
 
 
 

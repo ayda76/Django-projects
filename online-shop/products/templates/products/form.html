@@ -28,8 +28,21 @@
                    
                     <div class="row">
                         {% if request.user.is_staff %}
+                        {% if form_name == 'product' %}
                        
-                        <form action="{% url 'profile-edit-admin' profile.id%}" class="checkout-form" method="POST">
+                        <form action="{% url 'create-product' %}" class="checkout-form" method="POST">
+                            {% elif form_name == 'cat' %}
+                            <form action="{% url 'create-cat' %}" class="checkout-form" method="POST">
+                            {% elif form_name == 'size' %}
+                            <form action="{% url 'create-size' %}" class="checkout-form" method="POST">
+                            {% elif form_name == 'tag' %}
+                            <form action="{% url 'create-tag' %}" class="checkout-form" method="POST">
+                            {% elif form_name == 'color' %}
+                            <form action="{% url 'create-color' %}" class="checkout-form" method="POST">
+                            {% else %}
+                            <form action="{% url 'create-review' %}" class="checkout-form" method="POST">
+
+                        {% endif %}
                             {% else %}
          <form action="{% url 'update-profile' %}" class="checkout-form" method="POST">
                                 {% endif %}

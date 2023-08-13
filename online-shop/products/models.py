@@ -7,7 +7,7 @@ from colorfield.fields import ColorField
 
 #tags model
 class Tag(models.Model):
-    name=models.CharField(max_length=300)  
+    name=models.CharField(max_length=300,null=True)  
     created=models.DateTimeField(auto_now_add=True)
     id=models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
 
@@ -16,9 +16,9 @@ class Tag(models.Model):
 
 # Category model 
 class Category(models.Model):
-    name=models.CharField(max_length=300) 
-    image=models.ImageField(upload_to='cat-img/',default='/staticfiles/images/latest-1.jpg')
-    Banner=models.ImageField(upload_to='cat-img/banner/',default='/staticfiles/images/latest-1.jpg')
+    name=models.CharField(max_length=300,null=True) 
+    image=models.ImageField(upload_to='cat-img/',default='/staticfiles/images/latest-1.jpg',null=True)
+    Banner=models.ImageField(upload_to='cat-img/banner/',default='/staticfiles/images/latest-1.jpg',null=True)
      
     created=models.DateTimeField(auto_now_add=True)
     id=models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
@@ -38,7 +38,7 @@ class Category(models.Model):
 
 #size model
 class Size(models.Model):
-    name=models.CharField(max_length=10)
+    name=models.CharField(max_length=10,null=True)
     created=models.DateTimeField(auto_now_add=True)
     id=models.UUIDField(default=uuid.uuid4 , unique=True, primary_key=True, editable=False)
 
@@ -48,7 +48,7 @@ class Size(models.Model):
 
 #color model
 class Color(models.Model):
-    color = ColorField(default='#FFFFFF')
+    color = ColorField(default='#FFFFFF',null=True)
     name=models.CharField(max_length=300, default='white', null=True)
     created=models.DateTimeField(auto_now_add=True)
     id=models.UUIDField(default=uuid.uuid4 , unique=True, primary_key=True, editable=False)
@@ -115,8 +115,8 @@ class Product(models.Model):
 
 #Reviews model
 class Review(models.Model):
-    owner=models.ForeignKey(Profile,on_delete=models.CASCADE)
-    product=models.ForeignKey(Product, on_delete=models.CASCADE)
+    owner=models.ForeignKey(Profile,on_delete=models.CASCADE,null=True)
+    product=models.ForeignKey(Product, on_delete=models.CASCADE,null=True)
     rating=models.IntegerField(null=True,blank=True, default=0)
     comment=models.TextField(null=True, blank=True) 
     created=models.DateTimeField(auto_now_add=True)

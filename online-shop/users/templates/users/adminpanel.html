@@ -58,8 +58,8 @@
                                 <td class="p-price first-row">{{profile.last_name}}</td>
                                 <td class="p-price first-row">{{profile.email}}</td>
                                 <td class="p-price first-row">{{profile.tel}}</td>
-                                <td class="close-td first-row"><a href="" style=" border-radius: 5px; margin-left: 10px; padding-top: 10px;padding-bottom: 10px;padding-left: 5px; padding-right: 5px;background-color: rgb(87, 250, 174);color: aliceblue;" > Edit</a></td>
-                                <td class="close-td first-row"><i class="ti-close"></i></td>
+                                <td class="close-td first-row"><a href="{% url 'profile-edit-admin' profile.id %}" style=" border-radius: 5px; margin-left: 10px; padding-top: 10px;padding-bottom: 10px;padding-left: 5px; padding-right: 5px;background-color: rgb(87, 250, 174);color: aliceblue;" > Edit</a></td>
+                                <td class="close-td first-row"><a href="{% url 'profile-delete-admin' profile.id %}"><i class="ti-close"></i></a></td>
                             </tr><!---->
                            {% endfor %}
                         </tbody>
@@ -90,14 +90,14 @@
                                 <th>Category</th>
                                 <th>Tags</th>
                                 <th>Stock</th>
-                                <th> <a href="" style=" border-radius: 5px; margin-left: 10px; padding-top: 10px;padding-bottom: 10px;padding-left: 15px; padding-right: 15px;background-color: rgb(252, 93, 19);color: aliceblue;" > ADD </a></th>
+                                <th> <a href="{% url 'create-product' %}" style=" border-radius: 5px; margin-left: 10px; padding-top: 10px;padding-bottom: 10px;padding-left: 15px; padding-right: 15px;background-color: rgb(252, 93, 19);color: aliceblue;" > ADD </a></th>
 
                             </tr>
                         </thead>
                         <tbody>
                             {% for product in products %}
                             <tr>
-                                <td class="cart-pic first-row"><img src="{{product.image.url}}" alt=""></td>
+                                <td class="cart-pic first-row"><img src="{{product.imageURL}}" alt=""></td>
                                 <td class="p-price first-row">
                                     {{product.name}}
                                 </td>
@@ -133,7 +133,7 @@
                                 <th> Name</th>
                                 <th> Created At</th>
 
-                                <th> <a href="" style=" border-radius: 5px; margin-left: 10px; padding-top: 10px;padding-bottom: 10px;padding-left: 15px; padding-right: 15px;background-color: rgb(252, 93, 19);color: aliceblue;" > ADD </a></th>
+                                <th> <a href="{% url 'create-tag' %}" style=" border-radius: 5px; margin-left: 10px; padding-top: 10px;padding-bottom: 10px;padding-left: 15px; padding-right: 15px;background-color: rgb(252, 93, 19);color: aliceblue;" > ADD </a></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -171,7 +171,7 @@
                                 <th>Color</th>
                                 <th> Name</th>
                             
-                                <th> <a href="" style=" border-radius: 5px; margin-left: 10px; padding-top: 10px;padding-bottom: 10px;padding-left: 15px; padding-right: 15px;background-color: rgb(252, 93, 19);color: aliceblue;" > ADD </a></th>
+                                <th> <a href="{% url 'create-color' %}" style=" border-radius: 5px; margin-left: 10px; padding-top: 10px;padding-bottom: 10px;padding-left: 15px; padding-right: 15px;background-color: rgb(252, 93, 19);color: aliceblue;" > ADD </a></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -208,7 +208,7 @@
                                 <th> Name</th>
                                 <th>Created At</th>
                                
-                                <th> <a href="" style=" border-radius: 5px; margin-left: 10px; padding-top: 10px;padding-bottom: 10px;padding-left: 15px; padding-right: 15px;background-color: rgb(252, 93, 19);color: aliceblue;" > ADD </a></th>
+                                <th> <a href="{% url 'create-size' %}" style=" border-radius: 5px; margin-left: 10px; padding-top: 10px;padding-bottom: 10px;padding-left: 15px; padding-right: 15px;background-color: rgb(252, 93, 19);color: aliceblue;" > ADD </a></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -246,7 +246,7 @@
                                 <th> Name</th>
                                 <th>Created At</th>
                             
-                                <th> <a href="" style=" border-radius: 5px; margin-left: 10px; padding-top: 10px;padding-bottom: 10px;padding-left: 15px; padding-right: 15px;background-color: rgb(252, 93, 19);color: aliceblue;" > ADD </a></th>
+                                <th> <a href="{% url 'create-cat' %}" style=" border-radius: 5px; margin-left: 10px; padding-top: 10px;padding-bottom: 10px;padding-left: 15px; padding-right: 15px;background-color: rgb(252, 93, 19);color: aliceblue;" > ADD </a></th>
                                 
                             </tr>
                         </thead>
@@ -342,7 +342,7 @@
                                 <th class="p-name"> Product</th>
                                 <th>rating</th>
                                 <th>Comment</th>
-                                <th> <a href="" style=" border-radius: 5px; margin-left: 10px; padding-top: 10px;padding-bottom: 10px;padding-left: 15px; padding-right: 15px;background-color: rgb(252, 93, 19);color: aliceblue;" > ADD </a></th>
+                                <th> <a href="{% url 'create-review' %}" style=" border-radius: 5px; margin-left: 10px; padding-top: 10px;padding-bottom: 10px;padding-left: 15px; padding-right: 15px;background-color: rgb(252, 93, 19);color: aliceblue;" > ADD </a></th>
                             </tr>
                         </thead>
                         <tbody>
