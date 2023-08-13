@@ -126,22 +126,25 @@ def createReviews(request,pk):
         
 
         
-#### admin functions
+############################# admin functions##################################
+
+
 @login_required(login_url='login')
 def createProduct(request):
     user=request.user
     profile=Profile.objects.get(user=user)
-    product=Product.objects.create(
-            owner=profile   
-        )
-    form=createProductForm(instance=product)
+    
+    form=createProductForm()
     form_name='product'
     if user.is_staff == True:
         
         if request.method == "POST":
-            form=createProductForm(request.POST,instance=product)
+            form=createProductForm(request.POST)
+            
             if form.is_valid():
-                form.save()
+                product_form=form.save(commit=False)
+                product_form.owner=profile
+                product_form.save()
                 return redirect('admin-page')
 
     context={'form':form,'form_name':form_name}
@@ -149,98 +152,298 @@ def createProduct(request):
 
 
 @login_required(login_url='login')
+def editProduct(request,pk):
+    user=request.user
+    product=Product.objects.get(id=pk)
+    
+    form=createProductForm(instance=product)
+    form_name='edit_product'
+    if user.is_staff == True:
+        
+        if request.method == "POST":
+            form=createProductForm(request.POST,instance=product)
+            
+            if form.is_valid():
+                form.save()
+                return redirect('admin-page')
+
+    context={'form':form,'form_name':form_name,'product':product}
+    return render(request,'products/form.html',context)
+
+@login_required(login_url='login') 
+def deleteProduct(request,pk):
+    user=request.user
+    if user.is_staff == True:
+        product=Product.objects.get(id=pk)
+        product.delete()
+       
+        return redirect('admin-page')
+
+######Tag Admin##########
+@login_required(login_url='login')
 def createTag(request):
     user=request.user
     profile=Profile.objects.get(user=user)
-    tag=Tag.objects.create()
-    form=createTagForm(instance=tag)
+    
+    form=createTagForm()
     form_name='tag'
+    if user.is_staff == True:
+        
+        if request.method == "POST":
+            form=createTagForm(request.POST)
+            if form.is_valid():
+                tag_form=form.save(commit=False)
+                alreadyExists=Tag.objects.filter(name=tag_form.name).exists()
+                if alreadyExists == False:
+                    tag_form.save()
+                    return redirect('admin-page')
+                
+                
+
+    context={'form':form,'form_name':form_name}
+    return render(request,'products/form.html',context)
+
+@login_required(login_url='login')
+def editTag(request,pk):
+    user=request.user
+    tag=Tag.objects.get(id=pk)
+    
+    form=createTagForm(instance=tag)
+    form_name='edit_tag'
     if user.is_staff == True:
         
         if request.method == "POST":
             form=createTagForm(request.POST,instance=tag)
             if form.is_valid():
-                form.save()
+                tag_form=form.save(commit=False)
+                alreadyExists=Tag.objects.filter(name=tag_form.name).exists()
+                if alreadyExists == False:
+                    tag_form.save()
+                    return redirect('admin-page')
+                
+                
+
+    context={'form':form,'form_name':form_name,'tag':tag}
+    return render(request,'products/form.html',context)
+
+
+@login_required(login_url='login') 
+def deleteTag(request,pk):
+    user=request.user
+    if user.is_staff == True:
+        tag=Tag.objects.get(id=pk)
+        
+        tag.delete()
+        return redirect('admin-page')
+
+
+######Size Admin##########
+
+@login_required(login_url='login')
+def createSize(request):
+    user=request.user
+    
+    form=createSizeForm()
+    form_name='size'
+    if user.is_staff == True:
+        
+        if request.method == "POST":
+            form=createSizeForm(request.POST)
+            if form.is_valid():
+                
+                size_form=form.save(commit=False)
+                alreadyExists=Size.objects.filter(name=size_form.name).exists()
+                if alreadyExists == False:
+                    size_form.save()
+
+
+
+                
                 return redirect('admin-page')
 
     context={'form':form,'form_name':form_name}
     return render(request,'products/form.html',context)
 
 @login_required(login_url='login')
-def createSize(request):
+def editSize(request,pk):
     user=request.user
-    profile=Profile.objects.get(user=user)
-    size=Size.objects.create()
+    size=Size.objects.get(id=pk)
+    
     form=createSizeForm(instance=size)
-    form_name='size'
+    form_name='edit_size'
     if user.is_staff == True:
         
         if request.method == "POST":
             form=createSizeForm(request.POST,instance=size)
             if form.is_valid():
-                form.save()
-                return redirect('admin-page')
+                
+                size_form=form.save(commit=False)
+                alreadyExists=Size.objects.filter(name=size_form.name).exists()
+                if alreadyExists == False:
+                    size_form.save()
+                    return redirect('admin-page')
+
+
+    context={'form':form,'form_name':form_name,'size':size}
+    return render(request,'products/form.html',context)
+
+@login_required(login_url='login') 
+def deleteSize(request,pk):
+    user=request.user
+    if user.is_staff == True:
+        size=Size.objects.get(id=pk)
+        
+        size.delete()
+        return redirect('admin-page')
+
+########## Color Admin ###########
+@login_required(login_url='login')
+def createColor(request):
+    user=request.user
+    form=createColorForm()
+    form_name='color'
+    if user.is_staff == True:
+        
+        if request.method == "POST":
+            form=createColorForm(request.POST)
+            if form.is_valid():
+                color_form=form.save(commit=False)
+                alreadyExists=Color.objects.filter(name=color_form.name).exists()
+                if alreadyExists == False:
+                    color_form.save()
+                    return redirect('admin-page')
 
     context={'form':form,'form_name':form_name}
     return render(request,'products/form.html',context)
 
 @login_required(login_url='login')
-def createColor(request):
+def editColor(request,pk):
     user=request.user
-    profile=Profile.objects.get(user=user)
-    color=Color.objects.create()
+    color=Color.objects.get(id=pk)
+    
     form=createColorForm(instance=color)
-    form_name='color'
+    form_name='edit_color'
     if user.is_staff == True:
         
         if request.method == "POST":
             form=createColorForm(request.POST,instance=color)
             if form.is_valid():
-                form.save()
-                return redirect('admin-page')
+                color_form=form.save(commit=False)
+                alreadyExists=Color.objects.filter(name=color_form.name).exists()
+                if alreadyExists == False:
+                    color_form.save()
+                    return redirect('admin-page')
 
-    context={'form':form,'form_name':form_name}
+    context={'form':form,'form_name':form_name,'color':color}
     return render(request,'products/form.html',context)
 
+@login_required(login_url='login') 
+def deleteColor(request,pk):
+    user=request.user
+    if user.is_staff == True:
+        color=Color.objects.get(id=pk)
+    
+        color.delete()
+        return redirect('admin-page')
+
+#########Review Admin##########
 @login_required(login_url='login')
 def createReview(request):
     user=request.user
     profile=Profile.objects.get(user=user)
-    review=Review.objects.create(
-            owner=profile   
-        )
-    form=createReviewForm(instance=review)
+    
+    form=createReviewForm()
     form_name='review'
     if user.is_staff == True:
         
         if request.method == "POST":
-            form=createProduct(request.POST,instance=review)
+            form=createReviewForm(request.POST)
             if form.is_valid():
                 form.save()
+                
+
                 return redirect('admin-page')
 
     context={'form':form,'form_name':form_name}
     return render(request,'products/form.html',context)
 
 @login_required(login_url='login')
+def editReview(request,pk):
+    user=request.user
+    review=Review.objects.get(id=pk)
+    form=createReviewForm(instance=review)
+    form_name='edit_review'
+    if user.is_staff == True:
+        
+        if request.method == "POST":
+            form=createReviewForm(request.POST,instance=review)
+            if form.is_valid():
+                form.save()
+                
+
+                return redirect('admin-page')
+
+    context={'form':form,'form_name':form_name,'review':review}
+    return render(request,'products/form.html',context)
+
+@login_required(login_url='login') 
+def deleteReview(request,pk):
+    user=request.user
+    if user.is_staff == True:
+        review=Review.objects.get(id=pk)
+        
+        review.delete()
+        return redirect('admin-page')
+
+#######Category Admin###########
+@login_required(login_url='login')
 def createCat(request):
     user=request.user
-    
-    cat=Category.objects.create()
-    form=createCategoryForm(instance=cat)
+    form=createCategoryForm()
     form_name='cat'
+    if user.is_staff == True:
+        
+        if request.method == "POST":
+            form=createCategoryForm(request.POST)
+            if form.is_valid():
+                cat_form=form.save(commit=False)
+                alreadyExists=Category.objects.filter(name=cat_form.name).exists()
+                if alreadyExists == False:
+                    cat_form.save()
+                    return redirect('admin-page')
+                return redirect('admin-page')
+
+    context={'form':form,'form_name':form_name}
+    return render(request,'products/form.html',context)
+
+
+@login_required(login_url='login')
+def editCat(request,pk):
+    user=request.user
+    cat=Category.objects.get(id=pk)
+    form=createCategoryForm(instance=cat)
+    form_name='edit_cat'
     if user.is_staff == True:
         
         if request.method == "POST":
             form=createCategoryForm(request.POST,instance=cat)
             if form.is_valid():
-                form.save()
+                cat_form=form.save(commit=False)
+                alreadyExists=Category.objects.filter(name=cat_form.name).exists()
+                if alreadyExists == False:
+                    cat_form.save()
+                    return redirect('admin-page')
                 return redirect('admin-page')
 
-    context={'form':form,'form_name':form_name}
+    context={'form':form,'form_name':form_name,'cat':cat}
     return render(request,'products/form.html',context)
 
-
-    
+@login_required(login_url='login') 
+def deleteCat(request,pk):
+    user=request.user
+    if user.is_staff == True:
+        cat=Category.objects.get(id=pk)
+        cat.delete()
+        return redirect('admin-page')
 
     

@@ -5,7 +5,7 @@ from .models import Order,OrderItem
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
 from django.contrib import messages
-
+from .forms import createOrderForm, createOrderItemForm
 # Create your views here.
 
 
@@ -128,4 +128,110 @@ def submitOrder(request,pk):
 
     context={'profile':profile,'order':order,'orders':orders,'total_price':total_price,'q_product':q_product}
     return render(request,'orders/factor.html',context)
+
+
+
+
+################# Admin functions#######################
+
+
+
+#######Order Admin#################
+@login_required(login_url='login')
+def createOrder(request):
+    user=request.user
+    
+    
+    form=createOrderForm()
+    form_name='order'
+    if user.is_staff == True:
+        
+        if request.method == "POST":
+            form=createOrderForm(request.POST)
+            
+            if form.is_valid():
+                form.save()
+                return redirect('admin-page')
+
+    context={'form':form,'form_name':form_name}
+    return render(request,'orders/form.html',context)
+
+
+@login_required(login_url='login')
+def editOrder(request,pk):
+    user=request.user
+    order=Order.objects.get(id=pk)
+    
+    form=createOrderForm(instance=order)
+    form_name='edit_order'
+    if user.is_staff == True:
+        
+        if request.method == "POST":
+            form=createOrderForm(request.POST,instance=order)
+            
+            if form.is_valid():
+                form.save()
+                return redirect('admin-page')
+
+    context={'form':form,'form_name':form_name,'order':order}
+    return render(request,'orders/form.html',context)
+
+@login_required(login_url='login') 
+def deleteOrderAdmin(request,pk):
+    user=request.user
+    if user.is_staff == True:
+        order=Order.objects.get(id=pk)
+        order.delete()
+       
+        return redirect('admin-page')
+
+
+########### order item Admin###################
+@login_required(login_url='login')
+def createOrderItem(request):
+    user=request.user
+    
+    form=createOrderItemForm()
+    form_name='orderitem'
+    if user.is_staff == True:
+        
+        if request.method == "POST":
+            form=createOrderItemForm(request.POST)
+            
+            if form.is_valid():
+                form.save()
+                
+                return redirect('admin-page')
+
+    context={'form':form,'form_name':form_name}
+    return render(request,'orders/form.html',context)
+
+
+@login_required(login_url='login')
+def editOrderItem(request,pk):
+    user=request.user
+    orderitem=OrderItem.objects.get(id=pk)
+    
+    form=createOrderItemForm(instance=orderitem)
+    form_name='edit_orderitem'
+    if user.is_staff == True:
+        
+        if request.method == "POST":
+            form=createOrderItemForm(request.POST,instance=orderitem)
+            
+            if form.is_valid():
+                form.save()
+                return redirect('admin-page')
+
+    context={'form':form,'form_name':form_name,'orderitem':orderitem}
+    return render(request,'orders/form.html',context)
+
+@login_required(login_url='login') 
+def deleteOrderItemAdmin(request,pk):
+    user=request.user
+    if user.is_staff == True:
+        orderitem=OrderItem.objects.get(id=pk)
+        orderitem.delete()
+       
+        return redirect('admin-page')
 

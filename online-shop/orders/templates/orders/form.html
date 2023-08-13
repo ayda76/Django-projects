@@ -22,17 +22,23 @@
        
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="checkout-content">
-                        <a href="{% url 'login' %}" class="content-btn">Click Here To Login</a>
-                    </div>
-                   
+                    
                     <div class="row">
-                        {% if request.user.is_staff %}
                        
-                        <form action="{% url 'profile-edit-admin' profile.id%}" class="checkout-form" method="POST">
+                        {% if form_name == 'edit-orderitem' %}
+                        <form action="{% url 'edit-orderitem' orderitem.id %}" class="checkout-form" method="POST">
+                       
+                        
+                            {% elif form_name == 'orderitem' %}
+                            <form action="{% url 'create-orderitem' %}" class="checkout-form" method="POST">
+                            {% elif form_name == 'edit-order' %}
+                            <form action="{% url 'edit-order' order.id %}" class="checkout-form" method="POST">
                             {% else %}
-         <form action="{% url 'update-profile' %}" class="checkout-form" method="POST">
-                                {% endif %}
+                            <form action="{% url 'create-order' %}" class="checkout-form" method="POST">
+                            
+
+                        {% endif %}
+                           
                             {% csrf_token %}
 
                               {% for field in form %}
@@ -49,14 +55,8 @@
                             <button type="submit" class="site-btn place-btn">Confirm Your Information </button>
                         </div>
                     </form>
-                        <div class="col-lg-12">
-                            <div class="create-item" style="margin-left: 250px;">
-                                <label for="acc-create">
-                                    Create an account?
-                                    <a href="{% url 'register' %}"></a>
-                                </label>
-                            </div>
-                        </div>
+                        
+                 
                     </div>
                 </div>
 

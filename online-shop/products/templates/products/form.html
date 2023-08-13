@@ -39,8 +39,22 @@
                             <form action="{% url 'create-tag' %}" class="checkout-form" method="POST">
                             {% elif form_name == 'color' %}
                             <form action="{% url 'create-color' %}" class="checkout-form" method="POST">
-                            {% else %}
+                            {% elif form_name == 'review' %}
                             <form action="{% url 'create-review' %}" class="checkout-form" method="POST">
+                                
+                                {% elif form_name == 'edit_product' %}
+                                <form action="{% url 'edit-product' product.id%}" class="checkout-form" method="POST">
+                                {% elif form_name == 'edit_cat' %}
+                                <form action="{% url 'edit-cat' cat.id %}" class="checkout-form" method="POST">
+                                {% elif form_name == 'edit_size' %}
+                                <form action="{% url 'edit-size' size.id %}" class="checkout-form" method="POST">
+                                {% elif form_name == 'edit_tag' %}
+                                <form action="{% url 'edit-tag' tag.id %}" class="checkout-form" method="POST">
+                                {% elif form_name == 'edit_color' %}
+                                <form action="{% url 'edit-color' color.id %}" class="checkout-form" method="POST">
+
+                                {% else %}
+                                <form action="{% url 'edit-review' review.id %}" class="checkout-form" method="POST">
 
                         {% endif %}
                             {% else %}
@@ -62,14 +76,7 @@
                             <button type="submit" class="site-btn place-btn">Confirm Your Information </button>
                         </div>
                     </form>
-                        <div class="col-lg-12">
-                            <div class="create-item" style="margin-left: 250px;">
-                                <label for="acc-create">
-                                    Create an account?
-                                    <a href="{% url 'register' %}"></a>
-                                </label>
-                            </div>
-                        </div>
+                        
                     </div>
                 </div>
 

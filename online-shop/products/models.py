@@ -12,7 +12,7 @@ class Tag(models.Model):
     id=models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
 
     def __str__(self):
-        return self.name
+        return str(self.name)
 
 # Category model 
 class Category(models.Model):
@@ -24,7 +24,7 @@ class Category(models.Model):
     id=models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
 
     def __str__(self):
-        return self.name   
+        return str(self.name)   
 
     @property 
     def imageURL(self):
@@ -43,7 +43,7 @@ class Size(models.Model):
     id=models.UUIDField(default=uuid.uuid4 , unique=True, primary_key=True, editable=False)
 
     def __str__(self):
-        return self.name
+        return (self.name)
 
 
 #color model
@@ -54,7 +54,7 @@ class Color(models.Model):
     id=models.UUIDField(default=uuid.uuid4 , unique=True, primary_key=True, editable=False)
 
     def __str__(self):
-        return self.name
+        return str(self.name)
 
 
 #product model
@@ -80,7 +80,7 @@ class Product(models.Model):
     id=models.UUIDField(default=uuid.uuid4 , unique=True, primary_key=True, editable=False)
 
     def __str__(self):
-        return self.name
+        return str(self.name)
     
     @property 
     def imageURL(self):

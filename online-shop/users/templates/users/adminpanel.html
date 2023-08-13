@@ -107,8 +107,8 @@
                                 <td class="p-price first-row">{{product.cat}}</td>
                                 <td class="p-price first-row">{{product.tag}}</td>
                                 <td class="p-price first-row">{{product.stock}}</td>
-                                <td class="close-td first-row"><a href="" style=" border-radius: 5px; margin-left: 10px; padding-top: 10px;padding-bottom: 10px;padding-left: 5px; padding-right: 5px;background-color: rgb(87, 250, 174);color: aliceblue;" > Edit</a></td>
-                                <td class="close-td first-row"><i class="ti-close"></i></td>
+                                <td class="close-td first-row"><a href="{% url 'edit-product' product.id %}" style=" border-radius: 5px; margin-left: 10px; padding-top: 10px;padding-bottom: 10px;padding-left: 5px; padding-right: 5px;background-color: rgb(87, 250, 174);color: aliceblue;" > Edit</a></td>
+                                <td class="close-td first-row"><a href="{% url 'delete-product' product.id %}"><i class="ti-close"></i></a></td>
                             </tr><!---->
                            {% endfor %}
                         </tbody>
@@ -146,8 +146,8 @@
                                 
                                 <td class="p-price first-row">{{tag.created}}</td>
                                 
-                                <td class="close-td first-row"><a href="" style=" border-radius: 5px; margin-left: 10px; padding-top: 10px;padding-bottom: 10px;padding-left: 5px; padding-right: 5px;background-color: rgb(87, 250, 174);color: aliceblue;" > Edit</a></td>
-                                <td class="close-td first-row"><i class="ti-close"></i></td>
+                                <td class="close-td first-row"><a href="{% url 'edit-tag' tag.id %}" style=" border-radius: 5px; margin-left: 10px; padding-top: 10px;padding-bottom: 10px;padding-left: 5px; padding-right: 5px;background-color: rgb(87, 250, 174);color: aliceblue;" > Edit</a></td>
+                                <td class="close-td first-row"><a href="{% url 'delete-tag' tag.id %}"><i class="ti-close"></i></a></td></td>
                             </tr><!---->
                            {% endfor %}
                         </tbody>
@@ -182,8 +182,8 @@
                                     <h5>{{color.name}}</h5>
                                 </td>
                                 
-                                <td class="close-td first-row"><a href="" style=" border-radius: 5px; margin-left: 10px; padding-top: 10px;padding-bottom: 10px;padding-left: 5px; padding-right: 5px;background-color: rgb(87, 250, 174);color: aliceblue;" > Edit</a></td>
-                                <td class="close-td first-row"><i class="ti-close"></i></td>
+                                <td class="close-td first-row"><a href="{% url 'edit-color' color.id %}" style=" border-radius: 5px; margin-left: 10px; padding-top: 10px;padding-bottom: 10px;padding-left: 5px; padding-right: 5px;background-color: rgb(87, 250, 174);color: aliceblue;" > Edit</a></td>
+                                <td class="close-td first-row"><a href="{% url 'delete-color' color.id %}"><i class="ti-close"></i></a></td></td>
                             </tr><!---->
                            {% endfor %}
                         </tbody>
@@ -220,8 +220,8 @@
                                 </td>
                                 <td class="p-price first-row">{{size.created}}</td>
                                 
-                                <td class="close-td first-row"><a href="" style=" border-radius: 5px; margin-left: 10px; padding-top: 10px;padding-bottom: 10px;padding-left: 5px; padding-right: 5px;background-color: rgb(87, 250, 174);color: aliceblue;" > Edit</a></td>
-                                <td class="close-td first-row"><i class="ti-close"></i></td>
+                                <td class="close-td first-row"><a href="{% url 'edit-size' size.id %}" style=" border-radius: 5px; margin-left: 10px; padding-top: 10px;padding-bottom: 10px;padding-left: 5px; padding-right: 5px;background-color: rgb(87, 250, 174);color: aliceblue;" > Edit</a></td>
+                                <td class="close-td first-row"><a href="{% url 'delete-size' size.id %}"><i class="ti-close"></i></a></td>
                             </tr><!---->
                            {% endfor %}
                         </tbody>
@@ -259,12 +259,9 @@
                                 </td>
                                 
                                 <td class="p-price first-row">{{cat.created}}</td>
-                                <td class="p-price first-row">{{product.discount}}</td>
-                                <td class="p-price first-row">{{product.cat}}</td>
-                                <td class="p-price first-row">{{product.tag}}</td>
-                                <td class="p-price first-row">{{product.stock}}</td>
-                                <td class="close-td first-row"><a href="" style=" border-radius: 5px; margin-left: 10px; padding-top: 10px;padding-bottom: 10px;padding-left: 5px; padding-right: 5px;background-color: rgb(87, 250, 174);color: aliceblue;" > Edit</a></td>
-                                <td class="close-td first-row"><i class="ti-close"></i></td>
+                             
+                                <td class="close-td first-row"><a href="{% url 'edit-cat' cat.id %}" style=" border-radius: 5px; margin-left: 10px; padding-top: 10px;padding-bottom: 10px;padding-left: 5px; padding-right: 5px;background-color: rgb(87, 250, 174);color: aliceblue;" > Edit</a></td>
+                                <td class="close-td first-row"><a href="{% url 'delete-cat' cat.id %}"><i class="ti-close"></i></a></td>
                             </tr><!---->
                            {% endfor %}
                         </tbody>
@@ -289,7 +286,7 @@
                                 <th class="p-name"> Created At</th>
                                 <th>Payment status</th>
                                 <th>Delivery status</th>
-                                <th> <a href="" style=" border-radius: 5px; margin-left: 10px; padding-top: 10px;padding-bottom: 10px;padding-left: 15px; padding-right: 15px;background-color: rgb(252, 93, 19);color: aliceblue;" > ADD </a></th>
+                                <th> <a href="{% url 'create-order' %}" style=" border-radius: 5px; margin-left: 10px; padding-top: 10px;padding-bottom: 10px;padding-left: 15px; padding-right: 15px;background-color: rgb(252, 93, 19);color: aliceblue;" > ADD </a></th>
                             
                               
                             </tr>
@@ -316,8 +313,8 @@
                                     NOT Delivered
                                     {% endif%}</td>
                               
-                                    <td class="close-td first-row"><a href="" style=" border-radius: 5px; margin-left: 10px; padding-top: 10px;padding-bottom: 10px;padding-left: 5px; padding-right: 5px;background-color: rgb(87, 250, 174);color: aliceblue;" > Edit</a></td>
-                                <td class="close-td first-row"><i class="ti-close"></i></td>
+                                    <td class="close-td first-row"><a href="{% url 'edit-order' ord.id %}" style=" border-radius: 5px; margin-left: 10px; padding-top: 10px;padding-bottom: 10px;padding-left: 5px; padding-right: 5px;background-color: rgb(87, 250, 174);color: aliceblue;" > Edit</a></td>
+                                    <td class="close-td first-row"><a href="{% url 'delete-order-admin' ord.id %}"><i class="ti-close"></i></a></td>
                             </tr><!---->
                            {% endfor %}
                         </tbody>
@@ -357,8 +354,8 @@
                                 <td class="p-price first-row">{{review.rating}}</td>
                                 <td class="p-price first-row">{{review.comment}}</td>
                                
-                                <td class="close-td first-row"><a href="" style=" border-radius: 5px; margin-left: 10px; padding-top: 10px;padding-bottom: 10px;padding-left: 5px; padding-right: 5px;background-color: rgb(87, 250, 174);color: aliceblue;" > Edit</a></td>
-                                <td class="close-td first-row"><i class="ti-close"></i></td>
+                                <td class="close-td first-row"><a href="{% url 'edit-review' review.id %}" style=" border-radius: 5px; margin-left: 10px; padding-top: 10px;padding-bottom: 10px;padding-left: 5px; padding-right: 5px;background-color: rgb(87, 250, 174);color: aliceblue;" > Edit</a></td>
+                                <td class="close-td first-row"><a href="{% url 'delete-review' review.id %}"><i class="ti-close"></i></a></td>
                             </tr><!---->
                            {% endfor %}
                         </tbody>
@@ -384,7 +381,7 @@
                                 <th> Profile</th>
                                 <th>Quantity</th>
                                 <th>Created At</th>
-                                <th> <a href="" style=" border-radius: 5px; margin-left: 10px; padding-top: 10px;padding-bottom: 10px;padding-left: 15px; padding-right: 15px;background-color: rgb(252, 93, 19);color: aliceblue;" > ADD </a></th>
+                                <th> <a href="{% url 'create-orderitem'%}" style=" border-radius: 5px; margin-left: 10px; padding-top: 10px;padding-bottom: 10px;padding-left: 15px; padding-right: 15px;background-color: rgb(252, 93, 19);color: aliceblue;" > ADD </a></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -399,8 +396,8 @@
                                 <td class="p-price first-row">{{order.qty}}</td>
                                 <td class="p-price first-row">{{order.created}}</td>
                                 
-                                <td class="close-td first-row"><a href="" style=" border-radius: 5px; margin-left: 10px; padding-top: 10px;padding-bottom: 10px;padding-left: 5px; padding-right: 5px;background-color: rgb(87, 250, 174);color: aliceblue;" > Edit</a></td>
-                                <td class="close-td first-row"><i class="ti-close"></i></td>
+                                <td class="close-td first-row"><a href="{% url 'edit-orderitem' order.id %}" style=" border-radius: 5px; margin-left: 10px; padding-top: 10px;padding-bottom: 10px;padding-left: 5px; padding-right: 5px;background-color: rgb(87, 250, 174);color: aliceblue;" > Edit</a></td>
+                                <td class="close-td first-row"><a href="{% url 'delete-orderitem-admin' order.id %}"><i class="ti-close"></i></a></td>
                             </tr><!---->
                            {% endfor %}
                         </tbody>
