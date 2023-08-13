@@ -1,0 +1,421 @@
+
+{% extends 'main.html' %}
+{% block content %}
+
+   <!-- Breadcrumb Section Begin -->
+   <div class="breacrumb-section" style="background-color: grey;">
+    <div class="container"  style="max-width: 100%;">
+        <div class="row" >
+            <div class="col-lg-12">
+                <div class="nav-item">
+                    <div class="container" style="max-width: 100%;background-color: grey;">
+                <nav class="nav-menu mobile-menu">
+                    <ul style="background-color: grey;font-size: 12px;">
+                        <li class="active" style="margin-left: -15px;"><a href="{% url 'admin-page' %}?q=profiles">Profiles</a>
+                        <li style="margin-left: -15px;"><a href="{% url 'admin-page' %}?q=product">Products</a></li>
+                        </li>
+                        <li style="margin-left: -15px;"><a href="{% url 'admin-page' %}?q=cat">Categories</a></li>
+                        <li style="margin-left: -15px;"><a href="{% url 'admin-page' %}?q=color">Colors</a></li>
+                        <li style="margin-left: -15px;"><a href="{% url 'admin-page' %}?q=size">Sizes</a></li>
+                        <li style="margin-left: -15px;"><a href="{% url 'admin-page' %}?q=tag">Tags</a></li>
+                        <li style="margin-left: -15px;"><a href="{% url 'admin-page' %}?q=order">Orders</a></li>
+                        <li style="margin-left: -15px;"><a href="{% url 'admin-page' %}?q=orderitem">OrderItems</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb Section Begin -->
+{% if page_name == 'profiles' %}
+<!-- Shopping Cart Section Begin -->
+<section class="shopping-cart spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="cart-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th> Username</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone Number</th>
+                                <th>edit</th>
+                                <th><i class="ti-close"></i></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for profile in profiles %}
+                            <tr>
+                                <td class="cart-pic first-row"><img src="{{profile.imageURL}}" alt=""></td>
+                                <td class="p-price first-row">
+                                    {{profile.username}}
+                                </td>
+                                <td class="p-price first-row">{{profile.last_name}}</td>
+                                <td class="p-price first-row">{{profile.email}}</td>
+                                <td class="p-price first-row">{{profile.tel}}</td>
+                                <td class="close-td first-row"><a href="" style=" border-radius: 5px; margin-left: 10px; padding-top: 10px;padding-bottom: 10px;padding-left: 5px; padding-right: 5px;background-color: rgb(87, 250, 174);color: aliceblue;" > Edit</a></td>
+                                <td class="close-td first-row"><i class="ti-close"></i></td>
+                            </tr><!---->
+                           {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Shopping Cart Section End -->
+
+{% elif page_name == 'product' %}
+
+<!-- Shopping Cart Section Begin -->
+<section class="shopping-cart spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="cart-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th> Name</th>
+                                <th>Price</th>
+                                <th>Discount</th>
+                                <th>Category</th>
+                                <th>Tags</th>
+                                <th>Stock</th>
+                                <th> <a href="" style=" border-radius: 5px; margin-left: 10px; padding-top: 10px;padding-bottom: 10px;padding-left: 15px; padding-right: 15px;background-color: rgb(252, 93, 19);color: aliceblue;" > ADD </a></th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for product in products %}
+                            <tr>
+                                <td class="cart-pic first-row"><img src="{{product.image.url}}" alt=""></td>
+                                <td class="p-price first-row">
+                                    {{product.name}}
+                                </td>
+                                
+                                <td class="p-price first-row">{{product.price}}</td>
+                                <td class="p-price first-row">{{product.discount}}</td>
+                                <td class="p-price first-row">{{product.cat}}</td>
+                                <td class="p-price first-row">{{product.tag}}</td>
+                                <td class="p-price first-row">{{product.stock}}</td>
+                                <td class="close-td first-row"><a href="" style=" border-radius: 5px; margin-left: 10px; padding-top: 10px;padding-bottom: 10px;padding-left: 5px; padding-right: 5px;background-color: rgb(87, 250, 174);color: aliceblue;" > Edit</a></td>
+                                <td class="close-td first-row"><i class="ti-close"></i></td>
+                            </tr><!---->
+                           {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</section>
+{% elif page_name == 'tag' %}
+<!-- Shopping Cart Section Begin -->
+<section class="shopping-cart spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="cart-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                
+                                <th> Name</th>
+                                <th> Created At</th>
+
+                                <th> <a href="" style=" border-radius: 5px; margin-left: 10px; padding-top: 10px;padding-bottom: 10px;padding-left: 15px; padding-right: 15px;background-color: rgb(252, 93, 19);color: aliceblue;" > ADD </a></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for tag in tags %}
+                            <tr>
+                                
+                                <td class="p-price first-row">
+                                    <h5>{{tag.name}}</h5>
+                                </td>
+                                
+                                <td class="p-price first-row">{{tag.created}}</td>
+                                
+                                <td class="close-td first-row"><a href="" style=" border-radius: 5px; margin-left: 10px; padding-top: 10px;padding-bottom: 10px;padding-left: 5px; padding-right: 5px;background-color: rgb(87, 250, 174);color: aliceblue;" > Edit</a></td>
+                                <td class="close-td first-row"><i class="ti-close"></i></td>
+                            </tr><!---->
+                           {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</section>
+{% elif page_name == 'color' %}
+<!-- Shopping Cart Section Begin -->
+<section class="shopping-cart spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="cart-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Color</th>
+                                <th> Name</th>
+                            
+                                <th> <a href="" style=" border-radius: 5px; margin-left: 10px; padding-top: 10px;padding-bottom: 10px;padding-left: 15px; padding-right: 15px;background-color: rgb(252, 93, 19);color: aliceblue;" > ADD </a></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for color in colors %}
+                            <tr>
+                                <td class="cart-pic first-row"><a href="" style="font-size: 5px;  background-color: {{color.color}};color: {{color.color}};  border-radius:20px; border-color:#504e4d; padding:10px; margin:20px">dd</a></td>
+                                <td class="cart-title first-row">
+                                    <h5>{{color.name}}</h5>
+                                </td>
+                                
+                                <td class="close-td first-row"><a href="" style=" border-radius: 5px; margin-left: 10px; padding-top: 10px;padding-bottom: 10px;padding-left: 5px; padding-right: 5px;background-color: rgb(87, 250, 174);color: aliceblue;" > Edit</a></td>
+                                <td class="close-td first-row"><i class="ti-close"></i></td>
+                            </tr><!---->
+                           {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</section>
+{% elif page_name == 'size' %}
+<!-- Shopping Cart Section Begin -->
+<section class="shopping-cart spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="cart-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                
+                                <th> Name</th>
+                                <th>Created At</th>
+                               
+                                <th> <a href="" style=" border-radius: 5px; margin-left: 10px; padding-top: 10px;padding-bottom: 10px;padding-left: 15px; padding-right: 15px;background-color: rgb(252, 93, 19);color: aliceblue;" > ADD </a></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for size in sizes %}
+                            <tr>
+                              
+                                <td class="p-price first-row">
+                                    <h5>{{size.name}}</h5>
+                                </td>
+                                <td class="p-price first-row">{{size.created}}</td>
+                                
+                                <td class="close-td first-row"><a href="" style=" border-radius: 5px; margin-left: 10px; padding-top: 10px;padding-bottom: 10px;padding-left: 5px; padding-right: 5px;background-color: rgb(87, 250, 174);color: aliceblue;" > Edit</a></td>
+                                <td class="close-td first-row"><i class="ti-close"></i></td>
+                            </tr><!---->
+                           {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</section>
+{% elif page_name == 'cat' %}
+<!-- Shopping Cart Section Begin -->
+<section class="shopping-cart spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="cart-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                
+                                <th> Name</th>
+                                <th>Created At</th>
+                            
+                                <th> <a href="" style=" border-radius: 5px; margin-left: 10px; padding-top: 10px;padding-bottom: 10px;padding-left: 15px; padding-right: 15px;background-color: rgb(252, 93, 19);color: aliceblue;" > ADD </a></th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for cat in cats %}
+                            <tr>
+                                
+                                <td class="p-price first-row">
+                                    {{cat.name}}
+                                </td>
+                                
+                                <td class="p-price first-row">{{cat.created}}</td>
+                                <td class="p-price first-row">{{product.discount}}</td>
+                                <td class="p-price first-row">{{product.cat}}</td>
+                                <td class="p-price first-row">{{product.tag}}</td>
+                                <td class="p-price first-row">{{product.stock}}</td>
+                                <td class="close-td first-row"><a href="" style=" border-radius: 5px; margin-left: 10px; padding-top: 10px;padding-bottom: 10px;padding-left: 5px; padding-right: 5px;background-color: rgb(87, 250, 174);color: aliceblue;" > Edit</a></td>
+                                <td class="close-td first-row"><i class="ti-close"></i></td>
+                            </tr><!---->
+                           {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</section>
+{% elif page_name == 'order' %}
+<!-- Shopping Cart Section Begin -->
+<section class="shopping-cart spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="cart-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Profile Name</th>
+                                <th class="p-name"> Created At</th>
+                                <th>Payment status</th>
+                                <th>Delivery status</th>
+                                <th> <a href="" style=" border-radius: 5px; margin-left: 10px; padding-top: 10px;padding-bottom: 10px;padding-left: 15px; padding-right: 15px;background-color: rgb(252, 93, 19);color: aliceblue;" > ADD </a></th>
+                            
+                              
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for ord in order %}
+                            <tr>
+                                
+                                <td class="p-price first-row">
+                                    <h5>{{ord.profile.username}}</h5>
+                                </td>
+                                
+                                <td class="p-price first-row">{{ord.created}}</td>
+                                <td class="p-price first-row">
+                                    {% if ord.isPaid == True %} 
+                                    PAID
+                                    {% else %}
+                                    NOT PAID
+                                    {% endif%}
+                                    </td>
+                                <td class="p-price first-row">{% if ord.isDelivered == True %} 
+                                    Delivered
+                                    {% else %}
+                                    NOT Delivered
+                                    {% endif%}</td>
+                              
+                                    <td class="close-td first-row"><a href="" style=" border-radius: 5px; margin-left: 10px; padding-top: 10px;padding-bottom: 10px;padding-left: 5px; padding-right: 5px;background-color: rgb(87, 250, 174);color: aliceblue;" > Edit</a></td>
+                                <td class="close-td first-row"><i class="ti-close"></i></td>
+                            </tr><!---->
+                           {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</section>
+{% elif page_name == 'review' %}
+<!-- Shopping Cart Section Begin -->
+<section class="shopping-cart spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="cart-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Profile</th>
+                                <th class="p-name"> Product</th>
+                                <th>rating</th>
+                                <th>Comment</th>
+                                <th> <a href="" style=" border-radius: 5px; margin-left: 10px; padding-top: 10px;padding-bottom: 10px;padding-left: 15px; padding-right: 15px;background-color: rgb(252, 93, 19);color: aliceblue;" > ADD </a></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for review in reviews %}
+                            <tr>
+                                
+                                <td class="cart-title first-row">
+                                    <h5>{{review.owner.username}}</h5>
+                                </td>
+                                
+                                <td class="p-price first-row">{{review.product.name}}</td>
+                                <td class="p-price first-row">{{review.rating}}</td>
+                                <td class="p-price first-row">{{review.comment}}</td>
+                               
+                                <td class="close-td first-row"><a href="" style=" border-radius: 5px; margin-left: 10px; padding-top: 10px;padding-bottom: 10px;padding-left: 5px; padding-right: 5px;background-color: rgb(87, 250, 174);color: aliceblue;" > Edit</a></td>
+                                <td class="close-td first-row"><i class="ti-close"></i></td>
+                            </tr><!---->
+                           {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</section>
+{% else %} 
+<!-- Shopping Cart Section Begin -->
+<section class="shopping-cart spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="cart-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Product Image</th>
+                                <th>Product Name</th>
+                                <th> Profile</th>
+                                <th>Quantity</th>
+                                <th>Created At</th>
+                                <th> <a href="" style=" border-radius: 5px; margin-left: 10px; padding-top: 10px;padding-bottom: 10px;padding-left: 15px; padding-right: 15px;background-color: rgb(252, 93, 19);color: aliceblue;" > ADD </a></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in orderitems %}
+                            <tr>
+                                <td class="cart-pic first-row"><img src="{{order.product.image.url}}" alt=""></td>
+                                <td class="p-price first-row">
+                                    <h5>{{order.product.name}}</h5>
+                                </td>
+                                
+                                <td class="p-price first-row">{{order.order.profile.username}}</td>
+                                <td class="p-price first-row">{{order.qty}}</td>
+                                <td class="p-price first-row">{{order.created}}</td>
+                                
+                                <td class="close-td first-row"><a href="" style=" border-radius: 5px; margin-left: 10px; padding-top: 10px;padding-bottom: 10px;padding-left: 5px; padding-right: 5px;background-color: rgb(87, 250, 174);color: aliceblue;" > Edit</a></td>
+                                <td class="close-td first-row"><i class="ti-close"></i></td>
+                            </tr><!---->
+                           {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</section>
+{% endif%}
+
+
+
+
+
+
+{% endblock content %}

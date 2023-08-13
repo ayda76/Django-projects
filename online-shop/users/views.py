@@ -5,7 +5,9 @@ from django.contrib.auth import login , authenticate ,logout
 from django.contrib.auth.models import User
 from .forms import registerUserProfileForm , updateProfileForm
 from django.contrib.auth.decorators import login_required
-
+from .utils import  getProfilesPage,deleteProfilePage,editProfilePage
+from orders.models import Order,OrderItem
+from products.models import Product,Review,Tag,Color,Size,Category
 
 # Create your views here.
 
@@ -102,7 +104,59 @@ def updateProfile(request):
 
     
 
-    
+@login_required(login_url='login') 
+def getAdminPages(request):
+    user=request.user
+    q= request.GET.get('q') if request.GET.get('q') !=None else ''
+    if user.is_staff==True :
+        page_name='profiles'
+        context={'page_name':page_name}
+        if q == '' or q == 'profiles':
+            page_name='profiles'
+            profiles=Profile.objects.all()
+            context={'profiles':profiles,'page_name':page_name}
+            
+        elif q == 'cat':
+            page_name='cat'
+            cats=Category.objects.all()
+            context={'cats':cats,'page_name':page_name}
+            
+            
+        elif q == 'size':
+            page_name='size'
+            sizes=Size.objects.all()
+            context={'sizes':sizes,'page_name':page_name}
+            
+            
+        elif q == 'color':
+            page_name='color'
+            colors=Color.objects.all()
+            context={'colors':colors,'page_name':page_name}
+        elif q == 'tag':
+            page_name='tag'
+            tags=Tag.objects.all()
+            context={'tags':tags,'page_name':page_name}
+        elif q == 'product':
+            page_name='product'
+            products=Product.objects.all()
+            context={'products':products,'page_name':page_name}
+        elif q == 'review':
+            page_name='review'
+            reviews=Review.objects.all()
+            context={'reviews':reviews,'page_name':page_name}
+        elif q == 'order':
+            page_name='order'
+            order=Order.objects.all()
+            context={'order':order,'page_name':page_name}
+        else:
+            page_name='orderitem'
+            orderitems=OrderItem.objects.all()
+            context={'orderitems':orderitems,'page_name':page_name}
+
+        return render(request,'users/adminpanel.html',context)
+
+        
+
 
 
 
