@@ -52,7 +52,7 @@ def registerUser(request):
     page_name='register'
 
     if request.method == 'POST':
-        form=registerUserProfileForm(request.POST)
+        form=registerUserProfileForm(request.POST,)
         if form.is_valid():
             user=form.save(commit=False)
             user.username= user.username.lower()
@@ -96,7 +96,7 @@ def updateProfile(request):
     form=updateProfileForm(instance=profile)
 
     if request.method =='POST':
-        form=updateProfileForm(request.POST,instance=profile)
+        form=updateProfileForm(request.POST,request.FILES,instance=profile)
         if form.is_valid():
             form.save()
             print('saved the form')
@@ -121,6 +121,7 @@ def getAdminPages(request):
         if q == '' or q == 'profiles':
             page_name='profiles'
             profiles=Profile.objects.all()
+            
             context={'profiles':profiles,'page_name':page_name}
             
         elif q == 'cat':
@@ -174,7 +175,7 @@ def updateUserProfile(request,pk):
         form=updateProfileForm(instance=profile)
 
         if request.method == 'POST':
-            form=updateProfileForm(request.POST,instance=profile)
+            form=updateProfileForm(request.POST,request.FILES,instance=profile)
             if form.is_valid():
                 form.save()
                 return redirect('admin-page')

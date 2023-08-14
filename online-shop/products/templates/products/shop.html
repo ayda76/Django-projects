@@ -49,7 +49,8 @@
               
             </div>
             {% endfor %}
-        
+
+    {% include 'pagination.html' with queryset=products custom_range=custom_range %}
         </div>
     </div>
    

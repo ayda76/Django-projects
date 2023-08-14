@@ -29,9 +29,9 @@
                     <div class="row">
                         {% if request.user.is_staff %}
                        
-                        <form action="{% url 'profile-edit-admin' profile.id%}" class="checkout-form" method="POST">
+                        <form action="{% url 'profile-edit-admin' profile.id%}" class="checkout-form" method="POST" enctype="multipart/form-data">
                             {% else %}
-         <form action="{% url 'update-profile' %}" class="checkout-form" method="POST">
+         <form action="{% url 'update-profile' %}" class="checkout-form" method="POST" enctype="multipart/form-data">
                                 {% endif %}
                             {% csrf_token %}
 

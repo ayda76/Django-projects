@@ -58,6 +58,7 @@
     <section class="women-banner spad">
         <div class="container-fluid">
             <div class="row">
+                <!--banner-->
                 <div class="col-lg-3">
                     <div class="product-large set-bg" data-setbg="{{cat.Banner.url}}">
                         <h2>{{cat.name}}’s</h2>
@@ -67,19 +68,7 @@
             
                 <div class="col-lg-8 offset-lg-1">
                    
-                    <div class="filter-control">
-                       
-                        <ul>
-                            {% for tag in tags %}
-                               {% if tag.name == "Cloths" %}
-                                  <li class="active">{{tag.name}}</li>
-                               {% else %}
-                                  <li>{{tag.name}}</li>
-                               {% endif %}
-                            {% endfor %}
-                        </ul>
-                        
-                    </div>
+                   
 
                     <div class="product-slider owl-carousel">
                        

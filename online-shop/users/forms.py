@@ -18,7 +18,7 @@ class registerUserProfileForm(UserCreationForm):
 class updateProfileForm(ModelForm):
     class Meta:
         model=Profile
-        fields=['first_name','last_name' ,'email','username','city','country','address','tel','postalcode']
+        fields=['first_name','last_name' ,'email','username','city','country','address','tel','postalcode','image']
 
     def  __init__(self,*args,**kwargs):
         super(updateProfileForm, self).__init__(*args,**kwargs)

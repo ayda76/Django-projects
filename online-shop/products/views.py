@@ -1,11 +1,13 @@
 from django.shortcuts import render,redirect
 from .models import Product, Category, Review, Tag, Size,Color
-from .utils import filterCat,filterColor,filterSize,filterTag, search
+from .utils import filterCat,filterColor,filterSize,filterTag, search, paginateProducts
 from django.core.paginator import Paginator , PageNotAnInteger, EmptyPage
 from users.models import Profile
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import createProductForm,createColorForm,createCategoryForm,createReviewForm,createSizeForm,createTagForm
+
+from django.core.paginator import Paginator , PageNotAnInteger, EmptyPage
 # Create your views here.
 
 
@@ -80,9 +82,9 @@ def shop(request):
        
         
 
-    #custom_range,products=paginateProjects(request,products,3)
+    custom_range,products=paginateProducts(request,products,3)
 
-    context={'cats':cats,'tags':tags,'products':products, 'colors':colors, 'sizes':sizes, 'page':page, 'search_query':search_query}
+    context={'cats':cats,'tags':tags,'products':products, 'colors':colors, 'sizes':sizes, 'page':page, 'search_query':search_query,'custom_range':custom_range}
   
     return render(request,'products/shop.html',context)
 
@@ -139,7 +141,7 @@ def createProduct(request):
     if user.is_staff == True:
         
         if request.method == "POST":
-            form=createProductForm(request.POST)
+            form=createProductForm(request.POST,request.FILES)
             
             if form.is_valid():
                 product_form=form.save(commit=False)
@@ -161,7 +163,7 @@ def editProduct(request,pk):
     if user.is_staff == True:
         
         if request.method == "POST":
-            form=createProductForm(request.POST,instance=product)
+            form=createProductForm(request.POST,request.FILES,instance=product)
             
             if form.is_valid():
                 form.save()
@@ -305,7 +307,7 @@ def createColor(request):
     if user.is_staff == True:
         
         if request.method == "POST":
-            form=createColorForm(request.POST)
+            form=createColorForm(request.POST,request.FILES)
             if form.is_valid():
                 color_form=form.save(commit=False)
                 alreadyExists=Color.objects.filter(name=color_form.name).exists()
@@ -326,7 +328,7 @@ def editColor(request,pk):
     if user.is_staff == True:
         
         if request.method == "POST":
-            form=createColorForm(request.POST,instance=color)
+            form=createColorForm(request.POST,request.FILES,instance=color)
             if form.is_valid():
                 color_form=form.save(commit=False)
                 alreadyExists=Color.objects.filter(name=color_form.name).exists()
@@ -404,7 +406,7 @@ def createCat(request):
     if user.is_staff == True:
         
         if request.method == "POST":
-            form=createCategoryForm(request.POST)
+            form=createCategoryForm(request.POST,request.FILES)
             if form.is_valid():
                 cat_form=form.save(commit=False)
                 alreadyExists=Category.objects.filter(name=cat_form.name).exists()
@@ -426,7 +428,7 @@ def editCat(request,pk):
     if user.is_staff == True:
         
         if request.method == "POST":
-            form=createCategoryForm(request.POST,instance=cat)
+            form=createCategoryForm(request.POST,request.FILES,instance=cat)
             if form.is_valid():
                 cat_form=form.save(commit=False)
                 alreadyExists=Category.objects.filter(name=cat_form.name).exists()

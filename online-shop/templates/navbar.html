@@ -84,7 +84,7 @@
                     <div class="advanced-search">
                         
                         <button type="button" class="category-btn">All Categories</button>
-                        <form action="{% url 'shop' %}" method="GET">
+                        <form action="{% url 'shop' %}" method="GET" id="searchForm">
                             {% csrf_token %}
                         <div class="input-group">
                             <input type="text" value="{{search_query}}" name="search_query" placeholder="What do you need?">

@@ -30,28 +30,28 @@
                         {% if request.user.is_staff %}
                         {% if form_name == 'product' %}
                        
-                        <form action="{% url 'create-product' %}" class="checkout-form" method="POST">
+                        <form action="{% url 'create-product' %}" class="checkout-form" method="POST" enctype="multipart/form-data">
                             {% elif form_name == 'cat' %}
-                            <form action="{% url 'create-cat' %}" class="checkout-form" method="POST">
+                            <form action="{% url 'create-cat' %}" class="checkout-form" method="POST" enctype="multipart/form-data">
                             {% elif form_name == 'size' %}
                             <form action="{% url 'create-size' %}" class="checkout-form" method="POST">
                             {% elif form_name == 'tag' %}
                             <form action="{% url 'create-tag' %}" class="checkout-form" method="POST">
                             {% elif form_name == 'color' %}
-                            <form action="{% url 'create-color' %}" class="checkout-form" method="POST">
+                            <form action="{% url 'create-color' %}" class="checkout-form" method="POST" enctype="multipart/form-data">
                             {% elif form_name == 'review' %}
                             <form action="{% url 'create-review' %}" class="checkout-form" method="POST">
                                 
                                 {% elif form_name == 'edit_product' %}
-                                <form action="{% url 'edit-product' product.id%}" class="checkout-form" method="POST">
+                                <form action="{% url 'edit-product' product.id%}" class="checkout-form" method="POST" enctype="multipart/form-data">
                                 {% elif form_name == 'edit_cat' %}
-                                <form action="{% url 'edit-cat' cat.id %}" class="checkout-form" method="POST">
+                                <form action="{% url 'edit-cat' cat.id %}" class="checkout-form" method="POST" enctype="multipart/form-data">
                                 {% elif form_name == 'edit_size' %}
                                 <form action="{% url 'edit-size' size.id %}" class="checkout-form" method="POST">
                                 {% elif form_name == 'edit_tag' %}
                                 <form action="{% url 'edit-tag' tag.id %}" class="checkout-form" method="POST">
                                 {% elif form_name == 'edit_color' %}
-                                <form action="{% url 'edit-color' color.id %}" class="checkout-form" method="POST">
+                                <form action="{% url 'edit-color' color.id %}" class="checkout-form" method="POST" enctype="multipart/form-data">
 
                                 {% else %}
                                 <form action="{% url 'edit-review' review.id %}" class="checkout-form" method="POST">

@@ -29,12 +29,15 @@
     </div>
 </div>
 <!-- Breadcrumb Section Begin -->
-{% if page_name == 'profiles' %}
+
 <!-- Shopping Cart Section Begin -->
 <section class="shopping-cart spad">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
+
+{% if page_name == 'profiles' %}
+
                 <div class="cart-table">
                     <table>
                         <thead>
@@ -51,7 +54,7 @@
                         <tbody>
                             {% for profile in profiles %}
                             <tr>
-                                <td class="cart-pic first-row"><img src="{{profile.imageURL}}" alt=""></td>
+                                <td class="cart-pic first-row"><img src="{{profile.getImageURL}}" alt=""></td>
                                 <td class="p-price first-row">
                                     {{profile.username}}
                                 </td>
@@ -65,20 +68,10 @@
                         </tbody>
                     </table>
                 </div>
-                
-            </div>
-        </div>
-    </div>
-</section>
-<!-- Shopping Cart Section End -->
+      
 
 {% elif page_name == 'product' %}
 
-<!-- Shopping Cart Section Begin -->
-<section class="shopping-cart spad">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
                 <div class="cart-table">
                     <table>
                         <thead>
@@ -115,16 +108,9 @@
                     </table>
                 </div>
                 
-            </div>
-        </div>
-    </div>
-</section>
+            
 {% elif page_name == 'tag' %}
-<!-- Shopping Cart Section Begin -->
-<section class="shopping-cart spad">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
+
                 <div class="cart-table">
                     <table>
                         <thead>
@@ -154,16 +140,9 @@
                     </table>
                 </div>
                 
-            </div>
-        </div>
-    </div>
-</section>
+            
 {% elif page_name == 'color' %}
-<!-- Shopping Cart Section Begin -->
-<section class="shopping-cart spad">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
+
                 <div class="cart-table">
                     <table>
                         <thead>
@@ -190,16 +169,9 @@
                     </table>
                 </div>
                 
-            </div>
-        </div>
-    </div>
-</section>
+           
 {% elif page_name == 'size' %}
-<!-- Shopping Cart Section Begin -->
-<section class="shopping-cart spad">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
+
                 <div class="cart-table">
                     <table>
                         <thead>
@@ -227,17 +199,9 @@
                         </tbody>
                     </table>
                 </div>
-                
-            </div>
-        </div>
-    </div>
-</section>
+            
 {% elif page_name == 'cat' %}
-<!-- Shopping Cart Section Begin -->
-<section class="shopping-cart spad">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
+
                 <div class="cart-table">
                     <table>
                         <thead>
@@ -268,16 +232,7 @@
                     </table>
                 </div>
                 
-            </div>
-        </div>
-    </div>
-</section>
 {% elif page_name == 'order' %}
-<!-- Shopping Cart Section Begin -->
-<section class="shopping-cart spad">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
                 <div class="cart-table">
                     <table>
                         <thead>
@@ -321,16 +276,9 @@
                     </table>
                 </div>
                 
-            </div>
-        </div>
-    </div>
-</section>
+          
 {% elif page_name == 'review' %}
-<!-- Shopping Cart Section Begin -->
-<section class="shopping-cart spad">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
+
                 <div class="cart-table">
                     <table>
                         <thead>
@@ -345,7 +293,6 @@
                         <tbody>
                             {% for review in reviews %}
                             <tr>
-                                
                                 <td class="cart-title first-row">
                                     <h5>{{review.owner.username}}</h5>
                                 </td>
@@ -362,16 +309,8 @@
                     </table>
                 </div>
                 
-            </div>
-        </div>
-    </div>
-</section>
 {% else %} 
-<!-- Shopping Cart Section Begin -->
-<section class="shopping-cart spad">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
+
                 <div class="cart-table">
                     <table>
                         <thead>
@@ -404,15 +343,15 @@
                     </table>
                 </div>
                 
-            </div>
-        </div>
-    </div>
-</section>
 {% endif%}
 
 
 
 
+</div>
+</div>
 
+</div>
+</section>
 
 {% endblock content %}

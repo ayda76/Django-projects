@@ -17,17 +17,16 @@
     <div class="filter-widget">
         <h4 class="fw-title">Tags</h4>
         <div class="fw-brand-check">
+            <ul class="filter-catagories">
             {% for tag in tags %}
-            <div class="bc-item">
-                <label for="bc-calvin">
-                    {{tag.name}}
-                    <input type="checkbox" id="bc-calvin"></a>
-                    <a href="{% url 'shop' %}?q=tag,{{tag.id}}"><span class="checkmark"></span></a>
-                </label>
-            </div>
+            
+                    
+ <li><a href="{% url 'shop' %}?q=tag,{{tag.id}}" style="color: dimgrey;">{{tag.name}}</a>
+ </li>   
             {% endfor%}
+        </ul>
     </div>
-    
+    <!---
     <div class="filter-widget">
         <h4 class="fw-title">Price</h4>
         <div class="filter-range-wrap">
@@ -46,6 +45,7 @@
         </div>
         <a href="#" class="filter-btn">Filter</a>
     </div>
+-->
     <div class="filter-widget">
         <h4 class="fw-title">Color</h4>
         <div class="fw-color-choose">
