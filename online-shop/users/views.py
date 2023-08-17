@@ -92,15 +92,36 @@ def logoutUser(request):
 def updateProfile(request):
     
     user=request.user
-    profile=Profile.objects.get(user=user)
-    form=updateProfileForm(instance=profile)
+    
+    t=False
+    if user.is_staff== True:
+        
+        form=updateProfileForm()
+        t=True
+    else:
+        profile =Profile.objects.get(user=user)
+        form=updateProfileForm(instance=profile)
+        t=False
+    
 
     if request.method =='POST':
-        form=updateProfileForm(request.POST,request.FILES,instance=profile)
+        if t==True:
+            form=updateProfileForm(request.POST,request.FILES)
+        else:
+            profile =Profile.objects.get(user=user)
+            form=updateProfileForm(request.POST,request.FILES,instance=profile)
+
+        
         if form.is_valid():
-            form.save()
-            print('saved the form')
-            return redirect('checkout')
+            new_profile=form.save(commit=False)
+            new_profile.user=user
+            if new_profile.order_set.all() :
+                form.save()
+                return redirect('checkout')
+            else:
+                form.save()
+                return redirect('products')
+            
 
         else:
             messages.error(request,'no user found! please login')

@@ -430,11 +430,7 @@ def editCat(request,pk):
         if request.method == "POST":
             form=createCategoryForm(request.POST,request.FILES,instance=cat)
             if form.is_valid():
-                cat_form=form.save(commit=False)
-                alreadyExists=Category.objects.filter(name=cat_form.name).exists()
-                if alreadyExists == False:
-                    cat_form.save()
-                    return redirect('admin-page')
+                form.save()
                 return redirect('admin-page')
 
     context={'form':form,'form_name':form_name,'cat':cat}
