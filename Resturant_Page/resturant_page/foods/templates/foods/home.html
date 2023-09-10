@@ -1,0 +1,88 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content%}
+
+<section id="slider">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="block wow fadeInUp" data-wow-duration="500ms" data-wow-delay="300ms">
+                    <div class="title">
+                        <h3>Featured <span>Works</span></h3>
+                    </div>
+                    <div id="owl-example" class="owl-carousel">
+                        {% for food in foods %}
+                        <div class="owl-item" style="width: 344px;">
+                        <div>
+                            <img class="img-responsive"  src="{{food.imageURL}}" alt="">
+                        </div>
+                    </div>
+                        {% endfor%}
+
+                       
+
+                    </div>
+                </div>
+            </div><!-- .col-md-12 close -->
+        </div><!-- .row close -->
+    </div><!-- .container close -->
+</section><!-- slider close -->
+
+<section id="about-us">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="block">
+                    <img class="wow fadeInUp" data-wow-duration="300ms" data-wow-delay="400ms" src="{% static 'images/cooker-img.png' %}"
+                        alt="cooker-img">
+                    <h1 class="heading wow fadeInUp" data-wow-duration="400ms" data-wow-delay="500ms">Your
+                        <span>Restaurant’s</span> </br> Website Has To Look <span>Good</span>
+                    </h1>
+                    <p class="wow fadeInUp" data-wow-duration="300ms" data-wow-delay="600ms">Lorem ipsum dolor sit
+                        amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+                        magna aliqua. Ut enim </br> ad minim veniam, quis nostrud exercitation ullamco laboris nisi
+                        ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in </br>voluptate
+                        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat</p>
+                </div>
+            </div><!-- .col-md-12 close -->
+        </div><!-- .row close -->
+    </div><!-- .containe close -->
+</section><!-- #call-to-action close -->
+
+
+
+
+
+<section id="blog">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="block">
+                    <h1 class="heading">Latest <span>From</span> the <span>Blog</span></h1>
+                    <ul>
+                        {% for food in foods%}
+                        <li class="wow fadeInLeft" data-wow-duration="300ms" data-wow-delay="300ms">
+                            <div class="blog-img">
+                                <img src="{{food.imageURL}}" width="276" height="220" alt="blog-img">
+                            </div>
+                            <div class="content-right">
+                                <h3>{{food.name}}</h3>
+                                <p>Prepared in true New England fash-ion. Tender all-white meat chicken simmered...
+                                </p>
+                            </div>
+                        </li>
+                        {% endfor%}
+                        
+                       
+                       
+                       
+                      
+                    </ul>
+                    <a class="btn btn-default btn-more-info wow bounceIn" data-wow-duration="500ms" data-wow-delay="1200ms"
+                        href="#" role="button">More Info</a>
+                </div>
+            </div><!-- .col-md-12 close -->
+        </div><!-- .row close -->
+    </div><!-- .containe close -->
+</section><!-- #blog close -->
+{% endblock content%}
