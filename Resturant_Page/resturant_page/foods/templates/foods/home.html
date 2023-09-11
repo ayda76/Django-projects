@@ -67,7 +67,9 @@
                             </div>
                             <div class="content-right">
                                 <h3>{{food.name}}</h3>
-                                <p>Prepared in true New England fash-ion. Tender all-white meat chicken simmered...
+                                <p>.{% for ingredient in food.ing.all %}
+                                   <span>{{ingredient}}.</span> 
+                                    {% endfor%}
                                 </p>
                             </div>
                         </li>

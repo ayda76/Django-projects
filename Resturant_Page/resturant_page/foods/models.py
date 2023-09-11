@@ -25,11 +25,13 @@ class Food(models.Model):
      
     def __str__(self):
         return self.name
-
+    
+    @property
     def getDiscountPrice(self):
         self.price=self.price - (self.price * self.discount / 100)
         return self.price
-    
+        
+    @property
     def imageURL(self):
         try:
             img=self.image.url
