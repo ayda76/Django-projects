@@ -7,4 +7,12 @@ from django.contrib.auth.forms import UserCreationForm
 class registerUser(UserCreationForm):
     class Meta:
         model=User
-        fields=['first_name','last_name' ,'email','username','password1','password2']
+        fields=['first_name','last_name' ,'username','password1','password2']
+
+    def  __init__(self,*args,**kwargs):
+      
+
+        super(registerUser, self).__init__(*args,**kwargs)
+        for key, value in self.fields.items():
+            value.widget.attrs.update({'class':'form-control','type':'text'})
+            #form-group wow fadeInDown

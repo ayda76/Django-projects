@@ -1,4 +1,7 @@
+{% extends 'main.html' %}
+{% block content %}
 
+{% if page_name == 'login' %}
 <section id="contact-us">
     <div class="container">
         <div class="row">
@@ -6,24 +9,73 @@
                 <div class="block">
                     <h1 class="heading wow fadeInUp" data-wow-duration="500ms" data-wow-delay="300ms">
                         <span>Login</span></h1>
-                    <h3 class="title wow fadeInLeft" data-wow-duration="500ms" data-wow-delay="300ms"><a href="">Sign Up</a>  
-                        </h3>
-                    <form>
+                   
+                    <form action="{% url 'login' %}" method="POST">
+                        {% csrf_token %}
                         <div class="form-group wow fadeInDown" data-wow-duration="500ms" data-wow-delay="600ms">
-                            <input type="email" class="form-control" id="exampleInputEmail1"
-                                placeholder="Write your full name here...">
+                            <input type="text" name="username" class="form-control" id="exampleInputEmail1"
+                                placeholder="Write your username here...">
                         </div>
                         <div class="form-group wow fadeInDown" data-wow-duration="500ms" data-wow-delay="800ms">
-                            <input type="text" class="form-control" placeholder="Write your email address here...">
+                            <input type="password" name="password" class="form-control" placeholder="Write your password here...">
                         </div>
+                        <!--
                         <div class="form-group wow fadeInDown" data-wow-duration="500ms" data-wow-delay="1000ms">
                             <textarea class="form-control" rows="3" placeholder="Write your message here..."></textarea>
                         </div>
+                        -->
+                        <button type="submit" class="btn btn-default wow bounceIn" data-wow-duration="500ms" data-wow-delay="1300ms" 
+                       >login</button>
                     </form>
-                    <a class="btn btn-default wow bounceIn" data-wow-duration="500ms" data-wow-delay="1300ms" href="#"
-                        role="button">send your message</a>
+                    
+                    
                 </div>
+                <a href="{% url 'register' %}">Sign Up</a>  
             </div><!-- .col-md-12 close -->
         </div><!-- .row close -->
     </div><!-- .container close -->
 </section><!-- #contact-us close -->
+
+{% else %} 
+<section id="contact-us">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="block">
+                    <h1 class="heading wow fadeInUp" data-wow-duration="500ms" data-wow-delay="300ms">
+                        <span>Registeration</span></h1>
+                    <h3 class="title wow fadeInLeft" data-wow-duration="500ms" data-wow-delay="300ms"> 
+                        </h3>
+                    <form action="{% url 'register' %}" method="POST">
+                        {% csrf_token %}
+
+                        {% for field in form %}
+                        <label for="">{{field.label}}</label>
+                        {{field}}
+
+                        <!---<div class="form-group wow fadeInDown" data-wow-duration="500ms" data-wow-delay="600ms">
+                            <input type="text" name="username" class="form-control" id="exampleInputEmail1"
+                                placeholder="Write your username here...">
+                        </div>
+                        <div class="form-group wow fadeInDown" data-wow-duration="500ms" data-wow-delay="800ms">
+                            <input type="password" name="password" class="form-control" placeholder="Write your password here...">
+                        </div>
+                        
+                        <div class="form-group wow fadeInDown" data-wow-duration="500ms" data-wow-delay="1000ms">
+                            <textarea class="form-control" rows="3" placeholder="Write your message here..."></textarea>
+                        </div>
+                        -->
+                        {% endfor %}
+                        <button type="submit" class="btn btn-default wow bounceIn" data-wow-duration="500ms" data-wow-delay="1300ms" 
+                       >register</button>
+                    </form>
+                     
+                </div>
+                <a href="{% url 'login' %}">already have an account?login then</a> 
+            </div><!-- .col-md-12 close -->
+        </div><!-- .row close -->
+    </div><!-- .container close -->
+</section><!-- #contact-us close -->
+{% endif%}
+
+{% endblock content %}
