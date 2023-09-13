@@ -16,3 +16,17 @@ class registerUser(UserCreationForm):
         for key, value in self.fields.items():
             value.widget.attrs.update({'class':'form-control','type':'text'})
             #form-group wow fadeInDown
+
+
+class updateUserForm(ModelForm):
+    class Meta:
+        model=Profile
+        fields= '__all__'
+
+    def  __init__(self,*args,**kwargs):
+      
+
+        super(updateUserForm, self).__init__(*args,**kwargs)
+        for key, value in self.fields.items():
+            value.widget.attrs.update({'class':'form-control','type':'text'})
+

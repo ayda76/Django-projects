@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import registerUser
+from .forms import registerUser,updateUserForm
 from .models import Profile
 
 from django.contrib.auth import login , authenticate ,logout
@@ -26,7 +26,7 @@ def loginUser(request):
 
         if user is not None:
             login(request,user)
-            return redirect(home)
+            return redirect('home')
 
         else:
             messages.error(request,'username or password is incorrect')
@@ -67,3 +67,37 @@ def register(request):
 
     context={'page_name':page_name,'form':form}
     return render(request,'users/login_register.html',context)
+
+
+def update_user(request):
+    page_name='update_user'
+    user=request.user
+    profile=Profile.objects.get(user=user)
+    form=updateUserForm(instance=profile)
+
+    if profile:
+        if request.method == 'POST':
+            form=updateUserForm(request.POST,instance=profile)
+            if form.is_valid():
+                profile=form.save(commit=False)
+                profile.user=user
+                profile.save()
+                return redirect('home')
+
+            else:
+                messages.error(request,'no user found! please login')
+                return redirect('login')
+
+
+    else:
+        messages.error(request,'no user found! please login')
+        return redirect('login')
+
+    context={'form':form,'page_name':page_name}
+    return render(request,'users/login_register.html',context)
+
+
+
+
+
+                

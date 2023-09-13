@@ -63,7 +63,7 @@
                         {% for food in foods%}
                         <li class="wow fadeInLeft" data-wow-duration="300ms" data-wow-delay="300ms">
                             <div class="blog-img">
-                                <img src="{{food.imageURL}}" width="276" height="220" alt="blog-img">
+                                <img src="{{food.imageURL}}" width="285" height="220" alt="blog-img">
                             </div>
                             <div class="content-right">
                                 <h3>{{food.name}}</h3>
@@ -71,7 +71,10 @@
                                    <span>{{ingredient}}.</span> 
                                     {% endfor%}
                                 </p>
+                               
                             </div>
+                            <a href="" class="btn btn-default btn-more-info wow bounceIn" data-wow-duration="500ms" data-wow-delay="1200ms"
+                            style="padding: 8px 10px;background: #ff7337;" role="button">Add to Orders</a>
                         </li>
                         {% endfor%}
                         
@@ -80,8 +83,8 @@
                        
                       
                     </ul>
-                    <a class="btn btn-default btn-more-info wow bounceIn" data-wow-duration="500ms" data-wow-delay="1200ms"
-                        href="#" role="button">More Info</a>
+                 <!--    <a class="btn btn-default btn-more-info wow bounceIn" data-wow-duration="500ms" data-wow-delay="1200ms"
+                        href="#" role="button">More Info</a>-->
                 </div>
             </div><!-- .col-md-12 close -->
         </div><!-- .row close -->
