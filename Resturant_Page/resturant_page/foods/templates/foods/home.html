@@ -73,7 +73,7 @@
                                 </p>
                                
                             </div>
-                            <a href="" class="btn btn-default btn-more-info wow bounceIn" data-wow-duration="500ms" data-wow-delay="1200ms"
+                            <a href="{% url 'create-order' food.id %}" class="btn btn-default btn-more-info wow bounceIn" data-wow-duration="500ms" data-wow-delay="1200ms"
                             style="padding: 8px 10px;background: #ff7337;" role="button">Add to Orders</a>
                         </li>
                         {% endfor%}
