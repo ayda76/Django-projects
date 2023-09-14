@@ -22,7 +22,7 @@ class Order(models.Model):
 class OrderItem(models.Model):
     order=models.ForeignKey(Order,on_delete=models.SET_NULL,null=True)
     food_item=models.ForeignKey(Food, on_delete=models.CASCADE)
-    qty=models.IntegerField(blank=True, null=True)
+    qty=models.IntegerField(blank=True, null=True,default=1)
     created= models.DateTimeField(auto_now_add=True)
     id=models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
 
@@ -33,7 +33,7 @@ class OrderItem(models.Model):
 
     @property
     def getPrice(self):
-        price=self.qty * int(self.food_item.price)
+        price=int(self.qty) * int(self.food_item.price)
         return price
     
     

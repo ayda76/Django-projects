@@ -14,7 +14,7 @@
                         {% for food in foods %}
                         <div class="owl-item" style="width: 344px;">
                         <div>
-                            <img class="img-responsive"  src="{{food.imageURL}}" alt="">
+                            <a href="{% url 'food' food.id %}"> <img class="img-responsive"  src="{{food.imageURL}}" alt=""></a>
                         </div>
                     </div>
                         {% endfor%}
@@ -63,10 +63,10 @@
                         {% for food in foods%}
                         <li class="wow fadeInLeft" data-wow-duration="300ms" data-wow-delay="300ms">
                             <div class="blog-img">
-                                <img src="{{food.imageURL}}" width="285" height="220" alt="blog-img">
+                                <a href="{% url 'food' food.id %}"><img src="{{food.imageURL}}" width="285" height="220" alt="blog-img"></a>
                             </div>
                             <div class="content-right">
-                                <h3>{{food.name}}</h3>
+                                <h3><a href="{% url 'food' food.id %}">{{food.name}}</a></h3>
                                 <p>.{% for ingredient in food.ing.all %}
                                    <span>{{ingredient}}.</span> 
                                     {% endfor%}

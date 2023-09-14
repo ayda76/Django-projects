@@ -28,7 +28,7 @@ class Food(models.Model):
     
     @property
     def getDiscountPrice(self):
-        self.price=self.price - (self.price * self.discount / 100)
+        self.price=int(self.price) - (int(self.price) * self.discount / 100)
         return self.price
         
     @property

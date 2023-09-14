@@ -68,7 +68,7 @@ def register(request):
     context={'page_name':page_name,'form':form}
     return render(request,'users/login_register.html',context)
 
-
+@login_required(login_url='login')
 def update_user(request):
     page_name='update_user'
     user=request.user

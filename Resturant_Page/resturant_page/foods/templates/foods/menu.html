@@ -20,7 +20,7 @@
                             <li class="wow fadeInUp" data-wow-duration="300ms" data-wow-delay="300ms">
                                 <div class="item">
                                     <div class="item-title">
-                                        <h2>{{food.name}}</h2>
+                                        <h2><a href="{% url 'food' food.id %}">{{food.name}}</a></h2>
                                         <div class="border-bottom" style="    width: 90%;"></div>
                                         <a href="{% url 'create-order' food.id %}" style="float: right;
                                         background-color: #FF5333;

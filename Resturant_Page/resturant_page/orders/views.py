@@ -11,7 +11,14 @@ from django.contrib import messages
 def showOrderItems(request):
     user=request.user
     profile=Profile.objects.get(user=user)
-    order=Order.objects.get(profile=profile)
+    orders=Order.objects.filter(profile=profile)
+    order=None
+    #order=profile.order_set.filter(isPaid=False)
+    for i in orders:
+        if i.isPaid == False:
+            order=i
+        else:
+            pass
 
     if order is not None:
         orderItems=order.orderitem_set.all()
@@ -28,26 +35,34 @@ def createOrders(request,pk):
     food_item=Food.objects.get(id=pk)
     user=request.user
     profile=Profile.objects.get(user=user)
-    order=profile.order_set.filter(isPaid=False)
+    #order=Order.objects.filter(profile=profile).filter(isPaid=False) 
+    orders=Order.objects.filter(profile=profile)
+    order=None
+    #order=profile.order_set.filter(isPaid=False)
+    for i in orders:
+        if i.isPaid == False:
+            order=i
+        else:
+            pass
+    print(f"orderrrrrrrr:{order}")
 
-    if order is not None:
+    if order:
         orderItem=OrderItem.objects.create(
             order=order,
             food_item=food_item)
-        orderItem.save()
-        order.save()
-        return redirect('orders')       
+        
+        return redirect('orders')  
+           
+        
     
     else:
         order=Order.objects.create(profile=profile)
             
-        orderItem=OrderItem.objects.create(
-            order=order,
-            food_item=food_item)    
+        orderItem=OrderItem.objects.create(order=order,food_item=food_item)    
                 
-        orderItem.save()
-        order.save()
-        return redirect('orders')    
+        
+        return redirect('orders') 
+        
 
 
     orderItems=order.orderitem_set.all()  
@@ -63,13 +78,20 @@ def deleteOrderItem(request,pk):
 @login_required(login_url='login')
 def updateOrderItem(request,pk):
     orderItem=OrderItem.objects.get(id=pk)
-    qty=request.POST['qty']
+    if request.method == 'POST':
+        qty=request.POST['qty']
+    else:
+        qty=1
+    
 
     
-    if int(qty) != orderItem.qty & qty is not None:
-        orderItem.qty=int(qty)
-        orderItem.save()
-        return redirect('orders')
+    if qty != orderItem.qty:
+
+        if qty is not None:
+            orderItem.qty=qty
+            orderItem.save()
+            return redirect('orders')
+        
 
     return redirect('orders')
 
@@ -77,22 +99,42 @@ def updateOrderItem(request,pk):
 def makeOrder(request):
     user=request.user
     profile=Profile.objects.get(user=user)
-    order=profile.order_set.filter(isPaid=False)
-    
-    context={'order':order,'profile':profile}
+    orders=Order.objects.filter(profile=profile)
+    order=None
+    #order=profile.order_set.filter(isPaid=False)
+    for i in orders:
+        if i.isPaid == False:
+            order=i
+        else:
+            pass
+    context={'profile':profile}
 
     if order is not None:
+        
         if profile.address is not None:
-            orderItems=order.orderitem_set.all()  
             
-            context={'orderItems':orderItems,'profile':profile}
+            orderItems=order.orderitem_set.all()  
+            total_price=0
+            for item in orderItems:
+                total_price+=item.getPrice
+            context={'order':order,'profile':profile,'total_price':total_price}
             
         else:
             return redirect('update_user')
-
-    
         
     return render(request,'orders/paybill.html',context)
+@login_required(login_url='login')
+def paybill(request,pk):
+    order=Order.objects.get(id=pk)
+    
+    if order is not None:
+        order.isPaid=True
+        order.save()
+        context={'order':order}
+        return render(request,'orders/factor.html',context)
+
+
+   
 
         
         

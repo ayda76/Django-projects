@@ -7,6 +7,8 @@ urlpatterns = [
     path('update-order/<str:pk>',views.updateOrderItem, name='update-order'),
     path('',views.showOrderItems, name='orders'),
     
+    path('pay-order/<str:pk>',views.paybill, name='pay-order'),
+    
     path('make-order/',views.makeOrder, name='make-order'),
     
   

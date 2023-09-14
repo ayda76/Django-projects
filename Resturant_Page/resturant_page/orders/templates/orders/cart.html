@@ -29,7 +29,7 @@
                                     
                                    <span style="    font-size: 18px;
                                    margin-right: 7px;">$ {{item.getPrice}}</span>
-                                    <form action="{% url 'update-order' item.id %}" style="float: right;">
+                                    <form method="POST" action="{% url 'update-order' item.id %}" style="float: right;">
                                         {% csrf_token %}
                                     <input type="number" style="width: 40px; margin-right: 10px;"  default="0" value="{{item.qty}}" name="qty">
                                     <button  style="

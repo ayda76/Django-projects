@@ -1,0 +1,135 @@
+{% extends 'main.html' %}
+{% block content%}
+
+<section id="price">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="block">
+                
+                    <div class="pricing-list">
+                        <div class="title">
+                            <h3>Featured <span>on the week</span></h3>
+                        </div>
+                        <ul>
+                           
+                            <li class="wow fadeInUp" data-wow-duration="300ms" data-wow-delay="300ms">
+                                <div class="item">
+                                    <div class="item-title">
+                                        <ul>
+                                            <li class="wow fadeInUp">
+                                                <img src="{{food.imageURL}}" height="250" width="250">
+                                            </li>
+                                            <li class="wow fadeInUp"><span style="font-size: 23px;">{{food.name}}</span></li>
+                                            <li class="wow fadeInUp"> 
+                                                <ul>
+                                                    <li><span style="font-size: 23px;">ingredients:</span></li>
+                                                    {% for ingredient in food.ing.all %}
+                                                    <li><span style="font-size: 23px;">ingredients:{{ingredient}} -</span> </li>
+                                                    {% endfor %}
+                                                </ul>
+                                                
+                                                  </li>
+
+                                            <li class="wow fadeInUp"><span style="font-size: 23px;"> price :$ {{food.price}}</span></li>
+                                            {% if food.discount != 0 %}
+                                            <li class="wow fadeInUp"><span style="font-size: 23px;"> price with {{food.discount}}% discount :$ {{food.getDiscountPrice}}</span></li>
+                                            {% endif%}
+                                            <li class="wow fadeInUp"><a href="{% url 'create-order' food.id %}" class="btn btn-default pull-right wow bounceIn" data-wow-duration="500ms" data-wow-delay="1200ms" role="button"> Order</a></li>
+                                        </ul>
+                                        
+                                        
+                                        
+                                       
+            
+                                        
+                                        
+                                    </div>
+                                    
+                                </div>
+                            </li>
+                            
+                            
+                            
+                        </ul>
+                        
+                    </div>
+                </div>
+            </div><!-- .col-md-12 close -->
+        </div><!-- .row close -->
+    </div><!-- .containe close -->
+</section><!-- #price close -->
+
+
+
+
+<section id="contact-us">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="block">
+                    <h1 class="heading wow fadeInUp" data-wow-duration="500ms" data-wow-delay="300ms">
+                        <span>You can add your comment here</span></h1>
+                    <h3 class="title wow fadeInLeft" data-wow-duration="500ms" data-wow-delay="300ms"> 
+                        </h3>
+                    <form action="{% url 'create-review' %}" method="POST">
+                        {% csrf_token %}
+
+                        <div class="form-group wow fadeInDown" data-wow-duration="500ms" data-wow-delay="600ms">
+                            <input type="text" name="comment" class="form-control" id="exampleInputEmail1"
+                                placeholder="Write your comment here...">
+                             <input type="hidden" name="food" value="{{food.id}}">
+                        </div>
+                        
+                        <button type="submit" class="btn btn-default wow bounceIn" data-wow-duration="500ms" data-wow-delay="1300ms" 
+                       >Submit</button>
+                    </form>
+                     
+                </div>
+               
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+<section id="price">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="block">
+                    
+                    <div class="pricing-list">
+                        <div class="title">
+                            <h3>Customer's <span> Comments </span></h3>
+                        </div>
+                        <ul>
+                            {% for review in food.review_set.all %}
+                            <li class="wow fadeInUp" data-wow-duration="300ms" data-wow-delay="300ms">
+                                <div class="item">
+                                    <div class="item-title">
+                                        <h2>{{review.owner.username}}</h2>
+                                        
+                                        <span style="    font-size: 18px;
+                                        margin-right: 7px;">{{review.comment}}</span>
+                                        
+                                    </div>
+                                    
+                                </div>
+                            </li>
+                            {% endfor %}
+                            
+                            
+                        </ul>
+                       
+                    </div>
+                </div>
+            </div><!-- .col-md-12 close -->
+        </div><!-- .row close -->
+    </div><!-- .containe close -->
+</section><!-- #price close -->
+
+
+{% endblock content%}
