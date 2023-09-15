@@ -1,0 +1,59 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<section id="price">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="block">
+                    <h1 class="heading wow fadeInUp" data-wow-duration="300ms" data-wow-delay="300ms">our
+                        <span>MENU</span> the <span>PRICE</span></h1>
+                   
+                    <div class="pricing-list">
+                        <div class="title">
+                            <h3>Featured <span>on the week</span></h3>
+                        </div>
+                        <ul>
+                            {% for food in foods %}
+                            <li class="wow fadeInUp" data-wow-duration="300ms" data-wow-delay="300ms">
+                                <div class="item">
+                                    <div class="item-title">
+                                        <h2>{{food.name}}</h2>
+                                        <div class="border-bottom" style="    width: 90%;"></div>
+                                        <a href="{% url 'admin-food-update' food.id %}" style="float: right;
+                                        background-color: #FF5333;
+                                        padding-left: 7px;
+                                        padding-right: 7px;
+                                        color: white;
+                                        font-size: 18px;
+                                        border-radius: 25px;"> update</a>
+                                        <a href="{% url 'admin-food-delete' food.id %}" style="float: right;
+                                        background-color: #FF5333;
+                                        padding-left: 7px;
+                                        padding-right: 7px;
+                                        color: white;
+                                        font-size: 18px;
+                                        border-radius: 25px;"> delete</a>
+                                        <span style="    font-size: 18px;
+                                        margin-right: 7px;">$ {{food.price}}</span>
+                                        
+                                    </div>
+                                    <p>. {% for ingredient in food.ing.all %}
+                                      <span>{{ingredient}}</span> .
+                                        {% endfor %}
+                                    </p>
+                                </div>
+                            </li>
+                            {% endfor %}
+                            
+                            
+                        </ul>
+                        <a class="btn btn-default pull-right wow bounceIn" data-wow-duration="500ms" data-wow-delay="1200ms"
+                            href="{% url 'admin-food-create' %}" role="button">Create New Item</a>
+                    </div>
+                </div>
+            </div><!-- .col-md-12 close -->
+        </div><!-- .row close -->
+    </div><!-- .containe close -->
+</section><!-- #price close -->
+{% endblock content %}

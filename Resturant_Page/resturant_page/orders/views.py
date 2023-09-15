@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from .models import Order, OrderItem
 from foods.models import Food
 from users.models import Profile
+from .forms import orderitemForm,orderForm
 
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -134,7 +135,102 @@ def paybill(request,pk):
         return render(request,'orders/factor.html',context)
 
 
-   
+
+
+######################################
+######################################
+########admin#########################
+
+def read_order(request):
+    orders=Order.objects.all()
+    context={'orders':orders}
+    return render(request,'orders/admin_order_page.html',context)
+
+def update_order(request,pk):
+    page='update_order'
+    user=request.user
+    order=Order.objects.get(id=pk)
+    form=orderForm(instance=order)
+    if user.is_staff:
+        if request.method == 'POST':
+            form=orderForm(request.POST,request.FILES,instance=order)
+            if form.is_valid():
+                form.save()
+                return redirect('admin-order-page')
+            else:
+                pass
+    context={'page':page,'form':form,'order':order}
+    return render(request,'orders/form_page.html',context)
+
+def create_order(request):
+    page='create_order'
+    user=request.user
+    form=orderForm()
+    if user.is_staff:
+        if request.method == 'POST':
+            form=orderForm(request.POST,request.FILES)
+            if form.is_valid():
+                form.save()
+                return redirect('admin-order-page')
+            else:
+                pass
+
+
+    context={'page':page,'form':form}
+    return render(request,'orders/form_page.html',context)
+
+def delete_order(request,pk):
+    order=Order.objects.get(id=pk)
+    order.delete()
+    
+    return redirect('admin-order-page')
+
+
+def read_orderitem(request):
+    orderitems=OrderItem.objects.all()
+    context={'orderitems':orderitems}
+    return render(request,'orders/admin_orderitem_page.html',context)
+
+def update_orderitem(request,pk):
+    page='update_orderitem'
+    user=request.user
+    orderitem=OrderItem.objects.get(id=pk)
+    form=orderitemForm(instance=orderitem)
+    if user.is_staff:
+        if request.method == 'POST':
+            form=orderitemForm(request.POST,request.FILES,instance=orderitem)
+            if form.is_valid():
+                form.save()
+                return redirect('admin-orderitem-page')
+            else:
+                pass
+    context={'page':page,'form':form,'orderitem':orderitem}
+    return render(request,'orders/form_page.html',context)
+
+def create_orderitem(request):
+    page='create_orderitem'
+    user=request.user
+    form=orderitemForm()
+    if user.is_staff:
+        if request.method == 'POST':
+            form=orderitemForm(request.POST,request.FILES)
+            if form.is_valid():
+                form.save()
+                return redirect('admin-orderitem-page')
+            else:
+                pass
+
+
+    context={'page':page,'form':form}
+    return render(request,'orders/form_page.html',context)
+
+def delete_orderitem(request,pk):
+    orderitem=OrderItem.objects.get(id=pk)
+    orderitem.delete()
+    
+    return redirect('admin-orderitem-page')
+
+
 
         
         

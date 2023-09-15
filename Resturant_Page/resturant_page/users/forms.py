@@ -1,6 +1,6 @@
 from django.forms import ModelForm
 from django.contrib.auth.models import User
-from .models import Profile
+from .models import Profile, Review
 from django.contrib.auth.forms import UserCreationForm
 
 
@@ -27,6 +27,18 @@ class updateUserForm(ModelForm):
       
 
         super(updateUserForm, self).__init__(*args,**kwargs)
+        for key, value in self.fields.items():
+            value.widget.attrs.update({'class':'form-control','type':'text'})
+
+class reviewForm(ModelForm):
+    class Meta:
+        model=Review
+        fields= '__all__'
+
+    def  __init__(self,*args,**kwargs):
+      
+
+        super(reviewForm, self).__init__(*args,**kwargs)
         for key, value in self.fields.items():
             value.widget.attrs.update({'class':'form-control','type':'text'})
 

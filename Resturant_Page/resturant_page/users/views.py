@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
-from .forms import registerUser,updateUserForm
-from .models import Profile
+from .forms import registerUser,updateUserForm, reviewForm
+from .models import Profile,Review
+
 
 from django.contrib.auth import login , authenticate ,logout
 from django.contrib.auth.decorators import login_required
@@ -98,6 +99,119 @@ def update_user(request):
 
 
 
+##########################################
+##########################################
+###############admin######################
+
+def read_Review(request):
+    review=Review.objects.all()
+    context={'reviews':review}
+    return render(request,'users/admin-review-page.html',context)
+
+def update_Review(request,pk):
+    page='update_review'
+    user=request.user
+    review=Review.objects.get(id=pk)
+    form=reviewForm(instance=review)
+    if user.is_staff:
+        if request.method == 'POST':
+            form=reviewForm(request.POST,request.FILES,instance=review)
+            if form.is_valid():
+                form.save()
+                return redirect('admin-review-page')
+            else:
+                pass
+    context={'page':page,'form':form,'review':review}
+    return render(request,'users/form_page.html',context)
+
+def create_Review(request):
+    page='create_review'
+    user=request.user
+    form=reviewForm()
+    if user.is_staff:
+        if request.method == 'POST':
+            form=reviewForm(request.POST,request.FILES)
+            if form.is_valid():
+                form.save()
+                return redirect('admin-review-page')
+            else:
+                pass
+
+
+    context={'page':page,'form':form}
+    return render(request,'users/form_page.html',context)
+
+def delete_Review(request,pk):
+    review=Review.objects.get(id=pk)
+    review.delete()
+    
+    return redirect('admin-review-page')
+
+
+
+def read_User(request):
+    users=Profile.objects.all()
+    context={'profiles':users}
+    return render(request,'users/admin-user-page.html',context)
+
+def update_User(request,pk):
+    page='update_user'
+    user=Profile.objects.get(id=pk)
+    form=updateUserForm(instance=user)
+    if request.user.is_staff:
+        if request.method == 'POST':
+            form=updateUserForm(request.POST,request.FILES,instance=user)
+            if form.is_valid():
+                form.save()
+                return redirect('admin-user-page')
+            else:
+                pass
+    context={'page':page,'form':form,'profile':user}
+    return render(request,'users/form_page.html',context)
+
+def create_User(request):
+    page='create_user'
+    form=registerUser()
+    if request.user.is_staff:
+        if request.method == 'POST':
+            form=registerUser(request.POST,request.FILES)
+            if form.is_valid():
+                
+                user=form.save(commit=False)
+                user.username=user.username.lower()
+                user.save()
+                profile=Profile(
+                    user=user,
+                    username=user.username,
+                    firstname=user.first_name,
+                    lastname=user.last_name)
+                profile.save()
+                return redirect('admin-user-page')
+            else:
+                pass
+
+
+    context={'page':page,'form':form}
+    return render(request,'users/form_page.html',context)
+
+def delete_User(request,pk):
+    profile=Profile.objects.get(id=pk)
+    profile.user.delete()
+    
+    profile.delete()
+    
+    return redirect('admin-user-page')
+
+
+        
+        
+
+
+
+            
+        
+
+        
 
 
                 

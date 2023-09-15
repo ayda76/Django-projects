@@ -1,0 +1,139 @@
+{% extends 'main.html' %}
+{% block content %}
+
+
+{% if page == 'update_ingredient' %}
+
+
+<!--- update user ---->
+
+<section id="contact-us">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="block">
+                    <h1 class="heading wow fadeInUp" data-wow-duration="500ms" data-wow-delay="300ms">
+                        <span>Update Ingredient Item</span></h1>
+                    <h3 class="title wow fadeInLeft" data-wow-duration="500ms" data-wow-delay="300ms"> 
+                        </h3>
+                    <form action="{% url 'admin-ingredient-update' ingredient.id %}" method="POST">
+                        {% csrf_token %}
+
+                        {% for field in form %}
+                        <label for="">{{field.label}}</label>
+                        {{field}}
+
+                   
+                        {% endfor %}
+                        <button type="submit" class="btn btn-default wow bounceIn" data-wow-duration="500ms" data-wow-delay="1300ms" 
+                       >submit</button>
+                    </form>
+                     
+                </div>
+               
+            </div>
+        </div>
+    </div>
+</section>
+
+{% elif page == 'create_ingredient' %}
+
+
+<!--- update user ---->
+
+<section id="contact-us">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="block">
+                    <h1 class="heading wow fadeInUp" data-wow-duration="500ms" data-wow-delay="300ms">
+                        <span>Create Ingrediernt Item</span></h1>
+                    <h3 class="title wow fadeInLeft" data-wow-duration="500ms" data-wow-delay="300ms"> 
+                        </h3>
+                    <form action="{% url 'admin-ingredient-create' %}" method="POST">
+                        {% csrf_token %}
+
+                        {% for field in form %}
+                        <label for="">{{field.label}}</label>
+                        {{field}}
+
+                   
+                        {% endfor %}
+                        <button type="submit" class="btn btn-default wow bounceIn" data-wow-duration="500ms" data-wow-delay="1300ms" 
+                       >submit</button>
+                    </form>
+                     
+                </div>
+               
+            </div>
+        </div>
+    </div>
+</section>
+
+{% elif page == 'update_food' %}
+
+
+<!--- update user ---->
+
+<section id="contact-us">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="block">
+                    <h1 class="heading wow fadeInUp" data-wow-duration="500ms" data-wow-delay="300ms">
+                        <span>Update Food Item</span></h1>
+                    <h3 class="title wow fadeInLeft" data-wow-duration="500ms" data-wow-delay="300ms"> 
+                        </h3>
+                    <form action="{% url 'admin-food-update' food.id  %}" method="POST">
+                        {% csrf_token %}
+
+                        {% for field in form %}
+                        <label for="">{{field.label}}</label>
+                        {{field}}
+
+                   
+                        {% endfor %}
+                        <button type="submit" class="btn btn-default wow bounceIn" data-wow-duration="500ms" data-wow-delay="1300ms">submit</button>
+                    </form>
+                     
+                </div>
+               
+            </div>
+        </div>
+    </div>
+</section>
+
+{% else %} 
+
+<!--- registeration ---->
+<section id="contact-us">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="block">
+                    <h1 class="heading wow fadeInUp" data-wow-duration="500ms" data-wow-delay="300ms">
+                        <span>Create Food Item</span></h1>
+                    <h3 class="title wow fadeInLeft" data-wow-duration="500ms" data-wow-delay="300ms"> 
+                        </h3>
+                    <form action="{% url 'admin-food-create' %}" method="POST">
+                        {% csrf_token %}
+
+                        {% for field in form %}
+                        <label for="">{{field.label}}</label>
+                        {{field}}
+
+                       
+                        {% endfor %}
+                        <button type="submit" class="btn btn-default wow bounceIn" data-wow-duration="500ms" data-wow-delay="1300ms" 
+                       >submit</button>
+                    </form>
+                     
+                </div>
+                 
+            </div><!-- .col-md-12 close -->
+        </div><!-- .row close -->
+    </div><!-- .container close -->
+</section><!-- #contact-us close -->
+{% endif%}
+
+{% endblock content %}

@@ -51,12 +51,36 @@
 										
 										<li><a href=""> Your Orders</a></li>
 										<li><a href="{% url 'update_user' %}"> Profile</a></li>
+										{% if request.user.is_staff == True %}
+										<li><a href="{% url 'admin-page' %}">admin panel</a></li>{% endif %}
+
 										<li><a href="{% url 'logout' %}">Logout</a></li>
+
 										{% else %}
 										<li><a href="{% url 'login' %}">Login</a></li>
+
 										{% endif %}
 									</ul>
 								</div><!-- /.navbar-collapse -->
+								{% if request.user.is_staff == True %}
+								<div class="collapse navbar-collapse" >
+									
+									<ul class="nav navbar-nav navbar-right" id="top-nav">
+										
+										<li><a href="{% url 'admin-page' %}">Foods</a></li>
+										<li><a href="{% url 'admin-ingredient-page' %}">Ingredients</a></li>
+										<li><a href="{% url 'admin-order-page' %}">Orders</a></li>
+										
+										
+										<li><a href="{% url 'admin-orderitem-page' %}"> order items</a></li>
+										<li><a href="{% url 'admin-user-page' %}"> users</a></li>
+										
+										<li><a href="{% url 'admin-review-page' %}">reviews</a></li>
+
+										
+									</ul>
+								</div><!-- /.navbar-collapse -->
+								{% endif %}
 							</div><!-- /.container-fluid -->
 						</nav>
 					</div>

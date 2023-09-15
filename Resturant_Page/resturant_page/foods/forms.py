@@ -1,29 +1,30 @@
 from django.forms import ModelForm
 from django.contrib.auth.models import User
-from .models import Order, OrderItem
+from .models import Food, Ingredient
 
 
 
-class orderForm(ModelForm):
+class FoodForm(ModelForm):
     class Meta:
-        model=Order
+        model=Food
         fields='__all__'
 
     def  __init__(self,*args,**kwargs):
       
 
-        super(orderForm, self).__init__(*args,**kwargs)
+        super(FoodForm, self).__init__(*args,**kwargs)
         for key, value in self.fields.items():
             value.widget.attrs.update({'class':'form-control','type':'text'})
 
-class orderitemForm(ModelForm):
+            
+class IngredientForm(ModelForm):
     class Meta:
-        model=OrderItem
+        model=Ingredient
         fields='__all__'
 
     def  __init__(self,*args,**kwargs):
       
 
-        super(orderitemForm, self).__init__(*args,**kwargs)
+        super(IngredientForm, self).__init__(*args,**kwargs)
         for key, value in self.fields.items():
-            value.widget.attrs.update({'class':'form-control','type':'text'})
+            value.widget.attrs.update({'class':'form-control','type':'text'})            
