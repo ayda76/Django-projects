@@ -138,7 +138,7 @@ WSGI_APPLICATION = 'Devs.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'dev search',
+        'NAME': 'DEV',
         'USER': 'postgres',
         'PASSWORD':'VeunoiaTG76',
         'HOST':'localhost',

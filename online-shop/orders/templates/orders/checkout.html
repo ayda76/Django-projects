@@ -26,7 +26,7 @@
                         <a href="{% url 'login' %}" class="content-btn">Click Here To Login</a>
                     </div>
                     
-                   
+                   {% if order %}
                         
             
                             <form action="#" class="checkout-form">
@@ -93,7 +93,9 @@
                     </div>
                 </form>
                 </div>
+                {% endif %}
             </div>
+
  
     </div>
 </section>
