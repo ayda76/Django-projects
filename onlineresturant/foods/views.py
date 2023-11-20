@@ -13,10 +13,20 @@ def getFoods(request):
     serializer=FoodSerializer(foods,many=True)
     return Response(serializer.data)
 
+@api_view(['GET'])
+def getFoodById(request,pk):
+    try:
+        food=Food.object.get(id=pk)
+    except food.DoesNotExist:
+        return Response(serializers.error,status=404)
+    serializer=FoodSerializer(food,many=False)
+    return Response(serializer.data)
+
 @api_view(['POST'])
 @permission_classes([IsAdminUser])
 def addFood(request):
     data=request.data
+
     food=Food.objects.create(
         name=data['name'],
         cat=data['cat'],
@@ -28,6 +38,29 @@ def addFood(request):
     )
     serializer=FoodSerializer(food,many=False)
     return Response(serializer.data)
+
+@api_view(['PUT'])
+@permission_classes([IsAdminUser])
+def updateFood(request,pk):
+    try:
+        food=Food.objects.get(id=pk)
+    except food.DoesNotExist:
+        return Response(serializers.error,status=404)
+    data=request.data
+    food.name=data['name']
+    food.ingredient= data['ingredient']
+    food.cat=data['cat']
+    food.price= data['price']
+    food.image=data['image']
+    food.onMenu=data['onMenu']
+    serializer=FoodSerializer(food,many=False)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+
+    return Response(serializers.error, status=400)
+
+
 
 @api_view(['DELETE'])
 @permission_classes([IsAdminUser])
@@ -46,6 +79,15 @@ def getCats(request):
     serializer=CatSerializer(cats,many=True)
     return Response(serializer.data)
 
+@api_view(['GET'])
+def getCatById(request,pk):
+    try:
+        cat=Cat.object.get(id=pk)
+    except cat.DoesNotExist:
+        return Response(serializers.error,status=404)
+    serializer=CatSerializer(cat,many=False)
+    return Response(serializer.data)
+
 @api_view(['POST'])
 @permission_classes([IsAdminUser])
 def addCat(request):
@@ -55,6 +97,24 @@ def addCat(request):
     )
     serializer=CatSerializer(cat,many=False)
     return Response(serializer.data)
+
+@api_view(['PUT'])
+@permission_classes([IsAdminUser])
+def updateCat(request,pk):
+    try:
+        cat=Cat.objects.get(id=pk)
+    except cat.DoesNotExist:
+        return Response(serializers.error, status=404)
+
+    data=request.data
+    cat.name=data['name']
+    serializer=CatSerializer(cat,many=False)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+
+    return Response(serializers.error,status=400)
+
 
 @api_view(['DELETE'])
 @permission_classes([IsAdminUser])
@@ -71,15 +131,43 @@ def getIngredients(request):
     serializer=IngredientSerializer(ingredients,many=True)
     return Response(serializer.data)
 
+@api_view(['GET'])
+def getIngredientById(request,pk):
+    try:
+        ing=Ingredient.object.get(id=pk)
+    except ing.DoesNotExist:
+        return Response(serializers.error,status=404)
+    serializer=IngredientSerializer(ing,many=False)
+    return Response(serializer.data)
+
 @api_view(['POST'])
 @permission_classes([IsAdminUser])
-def addIngredients(request):
+def addIngredient(request):
     data=request.data
     ingredient=Ingredient.objects.create(
         name=data['name']
     )
     serializer=IngredientSerializer(ingredient,many=False)
     return Response(serializer.data)
+
+@api_view(['PUT'])
+@permission_classes([IsAdminUser])
+def updateIngredient(request,pk):
+    try:
+        ing=Ingredient.objects.get(id=pk)
+
+    except ing.DoesNotExist:
+        return Response(serializers.error, status=404)
+
+    data=request.data
+    ing.name=data['name']
+    serializer=IngredientSerializer(ing,many=False)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+
+    return Response(serializers.error, status)
+
 
 @api_view(['DELETE'])
 @permission_classes([IsAdminUser])
