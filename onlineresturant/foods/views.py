@@ -1,5 +1,5 @@
 from rest_framework import status
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view,permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 from rest_framework import serializers
@@ -9,14 +9,14 @@ from .models import Food, Cat, Ingredient
 
 @api_view(['GET'])
 def getFoods(request):
-    foods=Food.object.all()
+    foods=Food.objects.all()
     serializer=FoodSerializer(foods,many=True)
     return Response(serializer.data)
 
 @api_view(['GET'])
 def getFoodById(request,pk):
     try:
-        food=Food.object.get(id=pk)
+        food=Food.objects.get(id=pk)
     except food.DoesNotExist:
         return Response(serializers.error,status=404)
     serializer=FoodSerializer(food,many=False)
@@ -48,7 +48,7 @@ def updateFood(request,pk):
         return Response(serializers.error,status=404)
     data=request.data
     food.name=data['name']
-    food.ingredient= data['ingredient']
+    food.ingredient = data.get('ingredient')
     food.cat=data['cat']
     food.price= data['price']
     food.image=data['image']
@@ -75,14 +75,14 @@ def deleteFood(request,pk):
 
 @api_view(['GET'])
 def getCats(request):
-    cats=Cat.object.all()
+    cats=Cat.objects.all()
     serializer=CatSerializer(cats,many=True)
     return Response(serializer.data)
 
 @api_view(['GET'])
 def getCatById(request,pk):
     try:
-        cat=Cat.object.get(id=pk)
+        cat=Cat.objects.get(id=pk)
     except cat.DoesNotExist:
         return Response(serializers.error,status=404)
     serializer=CatSerializer(cat,many=False)
@@ -127,14 +127,14 @@ def deleteCat(request,pk):
 
 @api_view(['GET'])
 def getIngredients(request):
-    ingredients=Ingredient.object.all()
+    ingredients=Ingredient.objects.all()
     serializer=IngredientSerializer(ingredients,many=True)
     return Response(serializer.data)
 
 @api_view(['GET'])
 def getIngredientById(request,pk):
     try:
-        ing=Ingredient.object.get(id=pk)
+        ing=Ingredient.objects.get(id=pk)
     except ing.DoesNotExist:
         return Response(serializers.error,status=404)
     serializer=IngredientSerializer(ing,many=False)

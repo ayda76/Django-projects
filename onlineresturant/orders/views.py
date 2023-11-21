@@ -1,5 +1,5 @@
 from rest_framework import status
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view,permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 from rest_framework import serializers
@@ -29,7 +29,7 @@ def addOrder(request):
     user=request.user
     profile=Profile.objects.get(user=user)
     order=Order.objects.create(
-        user=profile
+        user=profile,
         isPaid=data['isPaid'],
         isDelivered=data['isDelivered']
     )
