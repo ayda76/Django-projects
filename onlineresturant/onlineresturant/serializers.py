@@ -4,14 +4,11 @@ from users.models import Profile
 from orders.models import Order,OrderItem
 
 class CatSerializer(serializers.ModelSerializer):
-    food=serializers.SerializerMethodField(read_only=True)
+    
     class Meta:
         model = Cat
         fields = '__all__'
 
-    def get_food(self,obj):
-        items=obj.food_set.all()
-        serializer=FoodSerializer(items,many=True)
 
 class IngredientSerializer(serializers.ModelSerializer):
     class Meta:
@@ -24,6 +21,11 @@ class FoodSerializer(serializers.ModelSerializer):
     class Meta:
         model = Food
         fields = '__all__'
+    
+    def get_ingredient(self,obj):
+        items=obj.ingredient.all()
+        serializer=IngredientSerializer(items,many=True)
+        return serializer.data
 
     
 
@@ -42,6 +44,7 @@ class OrderSerializer(serializers.ModelSerializer):
     def get_orderitem(self,obj):
         items=obj.orderitem_set.all()
         serializer=OrderItemSerializer(items,many=True)
+        return serializer.data
 
 class OrderItemSerializer(serializers.ModelSerializer):
     class Meta:

@@ -25,17 +25,25 @@ def getFoodById(request,pk):
 @api_view(['POST'])
 @permission_classes([IsAdminUser])
 def addFood(request):
+
     data=request.data
+    cat_item=data['cat']
+    cat=Cat.objects.get(id=cat_item['id'])
+    
+            
+
 
     food=Food.objects.create(
         name=data['name'],
-        cat=data['cat'],
-        ingredient=data['ingredient'],
+        cat=cat,
         price=data['price'],
         image=data['image'],
-        onMenu=data['onMenu']
-
-    )
+        onMenu=data['onMenu'])
+    
+    for item in data['ingredient']:
+        food.ingredient.add(item['id'])   
+    
+     
     serializer=FoodSerializer(food,many=False)
     return Response(serializer.data)
 
