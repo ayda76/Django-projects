@@ -4,19 +4,20 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 from rest_framework import serializers
 from onlineresturant.serializers import OrderSerializer,OrderItemSerializer
+from foods.models import Food
 from .models import Order,OrderItem
 from users.models import Profile
 # Create your views here.
 
 @api_view(['GET'])
 def getOrders(request):
-    orders=Order.object.all()
+    orders=Order.objects.all()
     serializer=OrderSerializer(orders,many=True)
     return Response(serializer.data)
 @api_view(['GET'])
 def getOrderById(request,pk):
     try:
-        order=Order.object.get(id=pk)
+        order=Order.objects.get(id=pk)
     except order.DoesNotExist:
         return Response(serializers.error,status=404)
     serializer=OrderSerializer(order,many=False)
@@ -27,29 +28,34 @@ def getOrderById(request,pk):
 def addOrder(request):
     data=request.data
     user=request.user
-    profile=Profile.objects.get(user=user)
-    order=Order.objects.create(
-        user=profile,
-        isPaid=data['isPaid'],
-        isDelivered=data['isDelivered']
-    )
-    serializer=OrderSerializer(order,many=False)
-    return Response(serializer.data)
+    orders=Order.objects.all()
+    check=False
+    for item in orders:
+        if item.isPaid==False:
+            check=True
+    
+    if check==False:
+        profile=Profile.objects.get(user=user)
+        order=Order.objects.create(
+            user=profile,
+            isPaid=data['isPaid'],
+            isDelivered=data['isDelivered'])
+
+        serializer=OrderSerializer(order,many=False)
+        return Response(serializer.data)
+    else:
+        return Response('An unpaid order exists still!!!!')
+
 
 @api_view(['PUT'])
 @permission_classes([IsAdminUser])
 def updateOrder(request,pk):
     try:
-        order=Order.object.get(id=pk)
+        order=Order.objects.get(id=pk)
     except order.DoesNotExist:
         return Response(serializers.error,status=404)
     data=request.data
-    user=request.user
-    profile=Profile.objects.get(user=user)
-    order.user=profile
-    order.isPaid= data['isPaid']
-    order.isDelivered=data['isDelivered']
-    serializer=OrderSerializer(order,many=False)
+    serializer=OrderSerializer(order,data=data,many=False)
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data)
@@ -67,14 +73,16 @@ def deleteOrder(request,pk):
 
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def getAllOrderItems(request):
-    orderItems=OrderItem.object.all()
+    orderItems=OrderItem.objects.all()
     serializer=OrderItemSerializer(orderItems,many=True)
     return Response(serializer.data)
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def getOrderItem(request,pk):
-    orderItem=OrderItem.object.get(id=pk)
+    orderItem=OrderItem.objects.get(id=pk)
     serializer=OrderItemSerializer(orderItem,many=False)
     return Response(serializer.data)
 
@@ -82,20 +90,24 @@ def getOrderItem(request,pk):
 @permission_classes([IsAuthenticated])
 def addOrderItem(request):
     user=request.user
-    profile=Profile.object.get(user=user)
+    profile=Profile.objects.get(user=user)
+    order=None
 
     try:
         order=profile.order_set.get(isPaid=False)
-    except order.DoesNotExist:
-        order=Order.object.create(
-            user=profile,
-            isPaid=False,
-            isDelivered=False
-        )
+    except Order.DoesNotExist:
+        pass
+    if order is None:
+        order=Order.objects.create(user=profile,isPaid=False,isDelivered=False)
+
+        
     data=request.data
-    orderItem=OrderItem.object.create(
+    food_item=data['food']
+
+    food=Food.objects.get(id=food_item['id'])
+    orderItem=OrderItem.objects.create(
         order=order,
-        food=data['food'],
+        food=food,
         user=profile,
         qty=data['qty']
     )
@@ -112,7 +124,7 @@ def addOrderItem(request):
 @permission_classes([IsAdminUser])
 def updateOrderItemQTY(request,pk):
     try:
-        orderItem=OrderItem.object.get(id=pk)
+        orderItem=OrderItem.objects.get(id=pk)
     except orderItem.DoesNotExist:
         return Response(serializers.error,status=404)
     data=request.data

@@ -30,9 +30,6 @@ def addFood(request):
     cat_item=data['cat']
     cat=Cat.objects.get(id=cat_item['id'])
     
-            
-
-
     food=Food.objects.create(
         name=data['name'],
         cat=cat,
@@ -52,19 +49,20 @@ def addFood(request):
 def updateFood(request,pk):
     try:
         food=Food.objects.get(id=pk)
+
     except food.DoesNotExist:
         return Response(serializers.error,status=404)
     data=request.data
-    food.name=data['name']
-    food.ingredient = data.get('ingredient')
-    food.cat=data['cat']
-    food.price= data['price']
-    food.image=data['image']
-    food.onMenu=data['onMenu']
-    serializer=FoodSerializer(food,many=False)
+    
+    serializer=FoodSerializer(food,data=data ,many=False)
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data)
+
+    else:
+        # Handle the case where the data is not valid
+        return Response(serializer.errors)
+    
 
     return Response(serializers.error, status=400)
 
@@ -100,11 +98,21 @@ def getCatById(request,pk):
 @permission_classes([IsAdminUser])
 def addCat(request):
     data=request.data
-    cat=Cat.objects.create(
-        name=data['name']
-    )
-    serializer=CatSerializer(cat,many=False)
-    return Response(serializer.data)
+    cats=Cat.objects.all()
+    check=False
+    for item in cats:
+        if item.name==data['name']:
+            check=True
+
+    if check==False:
+        cat=Cat.objects.create(name=data['name'])
+        serializer=CatSerializer(cat,many=False)
+        return Response(serializer.data)
+    else:
+        return Response("already exists!")
+
+
+    
 
 @api_view(['PUT'])
 @permission_classes([IsAdminUser])
@@ -115,8 +123,8 @@ def updateCat(request,pk):
         return Response(serializers.error, status=404)
 
     data=request.data
-    cat.name=data['name']
-    serializer=CatSerializer(cat,many=False)
+    
+    serializer=CatSerializer(cat,data=data,many=False)
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data)
@@ -152,11 +160,20 @@ def getIngredientById(request,pk):
 @permission_classes([IsAdminUser])
 def addIngredient(request):
     data=request.data
-    ingredient=Ingredient.objects.create(
-        name=data['name']
-    )
-    serializer=IngredientSerializer(ingredient,many=False)
-    return Response(serializer.data)
+
+    ingredients=Ingredient.objects.all()
+    check=False
+    for item in ingredients:
+        if item.name == data['name']:
+            check=True
+
+    if check==False:
+        ingredient=Ingredient.objects.create(name=data['name'])
+        serializer=IngredientSerializer(ingredient,many=False)
+        return Response(serializer.data)
+    else:
+        return Response('already exists!')
+    
 
 @api_view(['PUT'])
 @permission_classes([IsAdminUser])
@@ -168,8 +185,8 @@ def updateIngredient(request,pk):
         return Response(serializers.error, status=404)
 
     data=request.data
-    ing.name=data['name']
-    serializer=IngredientSerializer(ing,many=False)
+    
+    serializer=IngredientSerializer(ing,data=data,many=False)
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data)

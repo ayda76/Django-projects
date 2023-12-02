@@ -11,7 +11,7 @@ class Order(models.Model):
     id=models.AutoField(primary_key=True,editable=False)
 
     def __str__(self):
-        return self.created
+        return str(self.created)
 
 
 class OrderItem(models.Model):
@@ -23,7 +23,7 @@ class OrderItem(models.Model):
     id=models.AutoField(primary_key=True,editable=False)
 
     def __str__(self):
-        return self.created
+        return str(self.created)
 
     def totalPrice(self):
         total=self.food.price * self.qty
