@@ -2,6 +2,13 @@ from rest_framework import serializers
 from foods.models import Food,Cat,Ingredient
 from users.models import Profile
 from orders.models import Order,OrderItem
+from django.contrib.auth.models import User
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'username')
 
 class CatSerializer(serializers.ModelSerializer):
     
@@ -25,6 +32,7 @@ class IngredientSerializer(serializers.ModelSerializer):
         instance.name=validatedData.get('name',instance.name)
         instance.save()
         return instance
+
 
 
 
@@ -63,45 +71,62 @@ class FoodSerializer(serializers.ModelSerializer):
 
 
 
-
-    
-
-
-
 class ProfileSerializer(serializers.ModelSerializer):
+    user=UserSerializer(many=False)
     class Meta:
         model = Profile
         fields = '__all__'
 
-class OrderSerializer(serializers.ModelSerializer):
+    
+
+class OrderReadSerializer(serializers.ModelSerializer):
     orderitems=serializers.SerializerMethodField(read_only=True)
     user=ProfileSerializer(many=False)
     class Meta:
         model = Order
+        depth = 1
         fields = '__all__'
+
     def get_orderitems(self,obj):
         items=obj.orderitem_set.all()
-        serializer=OrderItemSerializer(items,many=True)
+        serializer=OrderItemReadSerializer(items,many=True)
         return serializer.data
+        
+    
+        
+
+  
+    
+
+class OrderWriteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Order
+        fields = '__all__'
 
     def update(self,instance, validatedData):
-        user_data=validatedData.pop('user',{})
-        user_obj,created=Profile.objects.get_or_create(**user_data)
-        instance.user=user_obj
+        
         instance.isPaid=validatedData.get('isPaid',instance.isPaid)
         instance.isDelivered=validatedData.get('isDelivered',instance.isDelivered)
         instance.save()
         return instance
 
-class OrderItemSerializer(serializers.ModelSerializer):
-    food=FoodSerializer(many=False)
-    user=ProfileSerializer(many=False)
-    order=OrderSerializer(many=False)
+class OrderItemReadSerializer(serializers.ModelSerializer):
+    
     class Meta:
         model = OrderItem
         fields = '__all__'
-
+        depth = 1
+    
+    
+class OrderItemWriteSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = OrderItem
+        fields = '__all__'
+        
+    
     def update(self,instance,validatedData):
+        """
         food=validatedData.pop('food',{})
         user=validatedData.pop('user',{})
         order=validatedData.pop('order',{})
@@ -114,6 +139,7 @@ class OrderItemSerializer(serializers.ModelSerializer):
 
         order_obj,creadted=Order.objects.get_or_create(**order)
         instance.order=order_obj
+        """
         instance.qty=validatedData.get('qty',instance.qty)
         instance.save()
         

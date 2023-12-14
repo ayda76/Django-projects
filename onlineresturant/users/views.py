@@ -33,7 +33,7 @@ class MyTokenObtainPairView(TokenObtainPairView):
 @api_view(['GET'])
 @permission_classes([IsAdminUser])
 def getUsers(request):
-    profiles=Profile.object.all()
+    profiles=Profile.objects.all()
     serializer=ProfileSerializer(profiles,many=True)
     return Response(serializer.data)
 
@@ -42,13 +42,13 @@ def getUsers(request):
 def getUserById(request,pk):
 
     try:
-        profile=Profile.object.get(id=pk)
+        profile=Profile.objects.get(id=pk)
     except profile.DoesNotExist:
         return Response(serializers.error,status=404)
     serializer=ProfileSerializer(profile,many=False)
-    if serializer.is_valid():
-        return Response(serializer.data)
-    return Response(serializers.error,status=400)
+    return Response(serializer.data)
+        
+    
     
 
 
@@ -56,7 +56,7 @@ def getUserById(request,pk):
 @permission_classes([IsAdminUser,IsAuthenticated])
 def updateUser(request,pk):
     try:
-        profile=Profile.object.get(id=pk)
+        profile=Profile.objects.get(id=pk)
     except profile.DoesNotExist:
         return Response(serializers.error,status=404)
 
@@ -79,7 +79,7 @@ def updateUser(request,pk):
 @permission_classes([IsAdminUser])
 def deleteUser(request,pk):
     try:
-        profile=Profile.object.get(id=pk)
+        profile=Profile.objects.get(id=pk)
     except profile.DoesNotExist:
         return Response(serializers.error,status=404)
     profile.delete()
